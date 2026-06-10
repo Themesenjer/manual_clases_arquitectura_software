@@ -79,7 +79,7 @@
             padding-left: 18px;
         }
 
-        /* Contenedor Principal de Lectura */
+        /* Contenedor Principal */
         main {
             margin-left: 280px;
             padding: 40px 60px;
@@ -110,7 +110,7 @@
             margin-top: 5px;
         }
 
-        /* Secciones de las Semanas */
+        /* Secciones */
         section {
             background-color: var(--bg-tarjeta);
             border: 1px solid var(--borde);
@@ -133,7 +133,9 @@
         h3 {
             font-size: 1.3rem;
             color: var(--texto-claro);
-            margin: 20px 0 10px 0;
+            margin: 25px 0 10px 0;
+            border-left: 3px solid var(--azul-oscuro);
+            padding-left: 10px;
         }
 
         p {
@@ -156,7 +158,7 @@
             color: var(--azul-tecnologico);
         }
 
-        /* Estilos de Tablas Didácticas */
+        /* Tablas */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -180,7 +182,7 @@
             background-color: rgba(255, 255, 255, 0.02);
         }
 
-        /* Bloques de Alerta Didáctica (Analogías) */
+        /* Bloques Didácticos */
         .analogia {
             background-color: rgba(56, 189, 248, 0.1);
             border-left: 4px solid var(--azul-tecnologico);
@@ -198,20 +200,25 @@
 
         .nota-codigo {
             background-color: var(--codigo-bg);
-            padding: 12px;
+            padding: 15px;
             font-family: 'Courier New', Courier, monospace;
             border-radius: 6px;
             color: var(--verde-exito);
             border: 1px solid var(--borde);
-            margin: 10px 0;
+            margin: 15px 0;
             overflow-x: auto;
-            white-space: pre;
         }
 
-        /* Sección de Bloques de Ejercicios Desplegables */
+        .pre-bloque {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--verde-exito);
+            margin: 0;
+        }
+
+        /* Estilos de Ejercicios Desplegables */
         .contenedor-ejercicios {
             margin-top: 25px;
-            padding: 15px;
+            padding: 20px;
             background-color: rgba(15, 23, 42, 0.6);
             border: 1px dashed var(--azul-tecnologico);
             border-radius: 8px;
@@ -219,7 +226,7 @@
 
         .contenedor-ejercicios h4 {
             color: var(--azul-tecnologico);
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             text-transform: uppercase;
             font-size: 0.9rem;
             letter-spacing: 0.5px;
@@ -229,8 +236,8 @@
             background-color: var(--bg-tarjeta);
             border: 1px solid var(--borde);
             border-radius: 6px;
-            margin-bottom: 10px;
-            padding: 10px;
+            margin-bottom: 12px;
+            padding: 12px;
         }
 
         details[open] {
@@ -249,17 +256,12 @@
         details[open] summary {
             color: var(--azul-tecnologico);
             border-bottom: 1px solid var(--borde);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             padding-bottom: 8px;
         }
 
-        .ejercicio-resuelto {
-            border-left: 4px solid var(--verde-exito);
-        }
-
-        .ejercicio-propuesto {
-            border-left: 4px solid var(--naranja-alerta);
-        }
+        .ejercicio-resuelto { border-left: 4px solid var(--verde-exito); }
+        .ejercicio-propuesto { border-left: 4px solid var(--naranja-alerta); }
 
         .tag-tipo {
             font-size: 0.75rem;
@@ -308,203 +310,389 @@
 
         <section id="semana1">
             <h2>Semana 1: Atributos de Calidad y El Arte del "Trade-off"</h2>
-            <p>La <strong>Arquitectura de Software</strong> representa el conjunto de decisiones estratégicas y estructurales que son difíciles de cambiar una vez implementadas. No define aspectos estéticos superficiales, sino el comportamiento y rendimiento del sistema bajo escenarios críticos de presión.</p>
+            
+            <h3>1.1 ¿Qué es la Arquitectura de Software?</h3>
+            <p>La arquitectura representa el conjunto de <strong>decisiones estratégicas fundamentales</strong> que dan forma a un sistema informático y que son costosas o difíciles de revertir una vez implementadas. No se enfoca en aspectos estéticos o de interfaz superficiales, sino en las propiedades operativas globales y en cómo se comportará la infraestructura bajo entornos críticos de estrés.</p>
             
             <div class="analogia">
-                <span>💡 Analogía del Arquitecto:</span>
-                Mientras la programación se asemeja a colocar los ladrillos y el cemento, la arquitectura define la naturaleza del edificio. Un hospital priorizará energía ininterrumpida (Disponibilidad), una discoteca requerirá un piso que soporte altas cargas dinámicas (Escalabilidad), y una vivienda común buscará optimizar el presupuesto (Costo/Mantenibilidad).
+                <span>💡 Analogía del Edificio (MSc. Raúl Páez):</span>
+                Imagina que vas a construir un edificio. La <em>programación</em> equivale a colocar de manera física los ladrillos y el cemento. Sin embargo, la <em>Arquitectura</em> consiste en dictaminar racionalmente si esa edificación corresponderá a un hospital, una discoteca o una vivienda familiar.
+                <br><br>
+                * Si es un <strong>hospital</strong>, requerirás sistemas de energía eléctrica ininterrumpida de respaldo (Disponibilidad).<br>
+                * Si es una <strong>discoteca</strong>, el piso estructurado debe soportar las cargas dinámicas de mil personas saltando en sincronía (Escalabilidad).<br>
+                * Si es una <strong>vivienda</strong>, el foco prioritario será minimizar el presupuesto y facilitar refacciones sencillas (Costo/Mantenibilidad).
             </div>
 
-            <h3>El Gran Dilema: El "Trade-off" (Sacrificios)</h3>
-            <p>No existe un sistema de software perfecto que cumpla con ser infinitamente veloz, 100% seguro, gratuito y extremadamente fácil de codificar. La regla de oro dicta que para maximizar un atributo de calidad, inevitablemente se debe mitigar o sacrificar otro.</p>
+            <h3>1.2 El Gran Dilema: El "Trade-off" (Sacrificios)</h3>
+            <p>En el plano real de la ingeniería de software, un arquitecto debe actuar como un negociador pragmático. <strong>No existe el sistema perfecto</strong> que sea infinitamente veloz, 100% infranqueable ante ciberataques, completamente gratuito y sumamente sencillo de codificar por programadores junior.</p>
+            <p>La regla de oro de la disciplina dicta que para elevar o maximizar un atributo de calidad específico, de manera inevitable e intrínseca se debe mitigar, comprometer o sacrificar otro.</p>
 
-            <h3>Requisitos Arquitectónicamente Significativos (ASRs)</h3>
+            <h3>1.3 Requisitos Arquitectónicamente Significativos (ASRs)</h3>
+            <p>Los atributos de calidad guían el diseño de las plataformas. Entre los pilares indispensables analizados se encuentran:</p>
             <ul>
-                <li><strong>Disponibilidad (Availability):</strong> Mide el porcentaje de tiempo que el sistema permanece operativo y respondiendo (estándar de 99.999%).</li>
-                <li><strong>Escalabilidad (Scalability):</strong> Capacidad de absorber incrementos en la carga (Vertical vs Horizontal).</li>
-                <li><strong>Resiliencia:</strong> Mecanismos automáticos de recuperación ante fallos imprevistos de infraestructura (Circuit Breaker, Retry).</li>
-                <li><strong>Fiabilidad (Reliability):</strong> Probabilidad de operar correctamente bajo métricas MTBF y MTTR.</li>
-                <li><strong>Durabilidad (Persistence & Longevidad):</strong> Asegura que los datos no se corrompan o pierdan tras transacciones exitosas, y evalúa cómo envejece el código.</li>
+                <li><strong>Disponibilidad (Availability):</strong> Mide el porcentaje de tiempo que la plataforma permanece activa, operativa y respondiendo solicitudes correctamente. El estándar de excelencia industrial se calcula en base a la "métrica de los nueves" (ej. un Acuerdo de Nivel de Servicio o SLA de 99.999% representa un límite técnico de caída de apenas 5 minutos anuales). Se obtiene eliminando Puntos Únicos de Fallo (SPOF) acoplando balanceadores de carga y redundancias físicas.</li>
+                <li><strong>Escalabilidad (Scalability):</strong> Capacidad inherente del sistema informático para procesar incrementos abruptos de carga transaccional o volumen de datos mediante la inyección estructurada de hardware:
+                    <ul>
+                        <li><em>Escalabilidad Vertical (Scaling Up):</em> Consiste en repotenciar la máquina existente añadiendo más memoria RAM, CPU o arreglos SSD. Tiene un límite físico estricto e induce costos exponencialmente prohibitivos.</li>
+                        <li><em>Escalabilidad Horizontal (Scaling Out):</em> Consiste en añadir nodos independientes en red distribuyendo el tráfico. Es teóricamente infinita, pero obliga al software a estar diseñado para entornos distribuidos (stateless).</li>
+                    </ul>
+                </li>
+                <li><strong>Resiliencia:</strong> La capacidad del sistema de absorber fallos elásticos de red, hardware o servicios externos y recuperarse de forma automatizada garantizando la continuidad del negocio sin degradaciones catastróficas. Utiliza patrones de contención lógica como el <em>Circuit Breaker (Disyuntor)</em> y políticas de <em>Retry</em> exponenciales.</li>
+                <li><strong>Fiabilidad (Reliability):</strong> La probabilidad matemática de que un componente informático ejecute su función esperada sin fallos ni corrupción interna de datos por un intervalo de tiempo delimitado. Se computa usando los indicadores técnicos <strong>MTBF</strong> (Tiempo Promedio Entre Fallos) y <strong>MTTR</strong> (Tiempo Promedio de Reparación).</li>
+                <li><strong>Durabilidad (Persistence & Longevidad):</strong> En almacenamiento de datos, garantiza que una transacción completada y confirmada persista permanentemente en medios físicos estables (discos no volátiles) incluso si ocurre un colapso eléctrico masivo en el centro de datos un milisegundo después. A nivel estructural, la <em>Durabilidad Arquitectónica</em> o longevidad evalúa la madurez de un código para envejecer con dignidad, permitiendo ser extendido o refactorizado 5 o 10 años después sin necesidad de demolerlo por completo.</li>
             </ul>
+
+            <div class="contenedor-ejercicios">
+                <h4>Sección Didáctica / Debates de Clase</h4>
+                
+                <details class="ejercicio-resuelto">
+                    <summary>Ejercicio de Reflexión: "Pensamiento de Arquitecto" - App de Mensajería <span class="tag-tipo tag-resuelto">Analizado</span></summary>
+                    <p><strong>Escenario propuesto por el docente:</strong> Analicemos el diseño de una aplicación a gran escala tipo WhatsApp bajo dos ópticas de fallo:</p>
+                    <ul>
+                        <li><strong>Si falla la Resiliencia:</strong> El usuario intenta enviar un mensaje de texto, ocurre un microcorte transitorio en el servicio de internet del celular y la aplicación se congela, se cierra abruptamente (crash) o detiene su hilo principal de ejecución. (Genera una experiencia de usuario nefasta).</li>
+                        <li><strong>Si falla la Durabilidad:</strong> El usuario envía el mensaje, la interfaz gráfica le muestra un check verde de "Enviado con Éxito", pero el servidor central de mensajería se reinicia de imprevisto y el registro se borra de la memoria del clúster antes de persistir. El receptor jamás lee el mensaje. (Provoca pérdida de información crítica e irreversible).</li>
+                    </ul>
+                    <p><strong>Pregunta para debate en examen:</strong> ¿Qué es intrínsecamente peor en un ecosistema transaccional bancario? ¿Que el sistema no responda durante 5 minutos (Falla transitoria de Resiliencia) o que se desvanezca por completo el registro físico de un depósito de $500 ejecutado por un cliente (Falla de Durabilidad)?</p>
+                    <p><strong>Resolución Técnica Obligatoria:</strong> En el dominio financiero, una falla de durabilidad destruye la consistencia atómica y legal del balance contable, lo cual es inaceptable y acarrea multas regulatorias severas. Una interrupción de 5 minutos afecta la disponibilidad temporal, la cual puede ser mitigada con colas de mensajería tolerantes a fallos. Por ende, la durabilidad es innegociable frente a la disponibilidad en este dominio.</p>
+                </details>
+            </div>
         </section>
 
         <section id="semana2">
             <h2>Semana 2: Documentación y Diseño Arquitectónico (ADRs)</h2>
-            <p>La documentación arquitectónica mitiga la pérdida de contexto cuando los equipos cambian en el tiempo. Los ADRs (Architecture Decision Records) capturan el <strong>porqué</strong> de una decisión técnica crítica.</p>
             
+            <h3>2.1 La Documentación como Herramienta de Comunicación</h3>
+            <p>La documentación en los proyectos de software avanzados no constituye un artefacto burocrático inerte o una pérdida de tiempo. Es, en sentido estricto, <strong>infraestructura de conocimiento compartido</strong>. Su misión primaria es evitar el colapso del sistema por la pérdida de contexto técnico y la rotación natural del personal en los equipos de ingeniería.</p>
+            
+            <p>Un documento arquitectónico maduro debe comunicar con claridad meridiana:</p>
+            <ul>
+                <li>Decisiones estratégicas de diseño adoptadas y sus justificaciones racionales.</li>
+                <li>Restricciones severas tanto del sistema tecnológico como de las reglas de negocio.</li>
+                <li>Fronteras lógicas, componentes, interfaces expuestas y árboles de dependencias.</li>
+                <li>Riesgos técnicos mitigados y supuestos iniciales de carga de usuarios.</li>
+            </ul>
+
+            <h3>2.2 El Público Objetivo de la Documentación</h3>
+            <p>Para que el conocimiento sea líquido, debe estructurarse para diferentes perfiles (stakeholders):</p>
+            <ul>
+                <li><strong>Desarrolladores:</strong> Guía exacta para codificación limpia, patrones de diseño y mantenimiento diario.</li>
+                <li><strong>Arquitectos:</strong> Hoja de ruta para asegurar la coherencia del ecosistema ante cambios y evoluciones futuras.</li>
+                <li><strong>QA / Testers:</strong> Definición clara de los criterios de aceptación de calidad y coberturas críticas a probar.</li>
+                <li><strong>Product Owners / Negocio:</strong> Delimitación exacta del alcance, restricciones operativas y viabilidad comercial.</li>
+                <li><strong>Futuros Equipos:</strong> Onboarding acelerado y continuidad técnica sin fricciones.</li>
+            </ul>
+
             <div class="nota-codigo">"Code tells you HOW. Comments tell you WHAT. Documentation tells you WHY."</div>
 
+            <h3>2.3 Architecture Decision Records (ADRs)</h3>
+            <p>Un ADR es un registro conciso que captura una decisión de diseño arquitectónico de alto impacto, documentando meticulosamente el contexto habilitante, las razones técnicas subyacentes, las opciones descartadas y los compromisos asumidos a futuro.</p>
+            
+            <h3>2.4 Anatomía Estricta de un ADR Estructurado</h3>
+            <ol>
+                <li><strong>Título:</strong> Identificador numérico secuencial acompañado de la declaración de la acción (Ej: <em>ADR-001: Migración de Arquitectura Monolítica a Microservicios</em>).</li>
+                <li><strong>Estatus:</strong> Ciclo de vida dinámico del documento (Propuesto, Aceptado, Rechazado, o Superado por un ADR posterior).</li>
+                <li><strong>Contexto:</strong> Redacción de las fuerzas del negocio, limitaciones presupuestarias, requerimientos técnicos, estado actual del sistema y fricciones observadas que impulsan la necesidad de decidir.</li>
+                <li><strong>Decisión:</strong> Enunciado explícito, directo y prescriptivo del curso tecnológico o estructural que el equipo adoptará de forma obligatoria.</li>
+                <li><strong>Consecuencias:</strong> Análisis detallado y honesto de los compromisos. Debe reflejar tanto los impactos positivos tangibles como los impactos negativos (la deuda técnica asumida o los trade-offs sacrificados) junto a su respectivo plan de mitigación.</li>
+            </ol>
+
             <div class="contenedor-ejercicios">
-                <h4>Sección Práctica: Registro de Decisiones</h4>
-                
+                <h4>Sección Práctica / Taller de ADRs</h4>
+
                 <details class="ejercicio-resuelto">
-                    <summary>Ejercicio Resuelto: ADR-001 - Almacenamiento de Videos <span class="tag-tipo tag-resuelto">Resuelto</span></summary>
-                    <p><strong>Problema Evaluado:</strong> Elegir la infraestructura óptima para el almacenamiento y entrega masiva de archivos de video para una plataforma de streaming.</p>
-                    <p><strong>Alternativas analizadas:</strong> AWS S3 vs CDN Propio vs Filesystem Distribuido en servidores On-Premise.</p>
-                    <p><strong>Solución Seleccionada:</strong> AWS S3 integrado con Amazon CloudFront como CDN. Ofrece alta disponibilidad nativa, replicación geográfica automática y reduce sustancialmente el costo operativo inicial (OpEx) frente a mantener almacenamiento en servidores dedicados propios.</p>
+                    <summary>Ejercicio Resuelto en Clase: ADR-001 - Infraestructura de Almacenamiento de Video <span class="tag-tipo tag-resuelto">Clase</span></summary>
+                    <p><strong>Problema Planteado:</strong> Determinar el mecanismo idóneo para el almacenamiento y despacho de miles de archivos multimedia pesados para una plataforma educativa global.</p>
+                    <p><strong>Alternativas Evaluadas:</strong> AWS S3 vs CDN Local Dedicado vs Filesystem Distribuido en hardware On-Premise.</p>
+                    <p><strong>Decisión Tomada:</strong> Adoptar AWS S3 con Amazon CloudFront. Provee almacenamiento virtualmente ilimitado e inmutable, alta disponibilidad nativa sin sobrecarga de administración de discos y reduce el gasto de capital (CapEx) a costos netamente operativos (OpEx).</p>
                 </details>
 
                 <details class="ejercicio-propuesto">
-                    <summary>Ejercicio Propuesto: Diseño de Cadena de ADRs para Streaming de Video <span class="tag-tipo tag-propuesto">Resuelto por Alumno</span></summary>
-                    <p><strong>Enunciado de la diapositiva:</strong> Diseñar la cadena secuencial dependiente de decisiones a partir de ADR-001 (Almacenamiento de video) enfocándose en protocolos de streaming, caché y concurrencia.</p>
+                    <summary>Ejercicio Propuesto: Diseño de una Cadena Secuencial de ADRs para Streaming <span class="tag-tipo tag-propuesto">Resuelto por Alumno</span></summary>
+                    <p><strong>Enunciado de la Diapositiva:</strong> Tomando como raíz el ADR-001 de almacenamiento en S3, diseñe la cadena lógica secuencial de decisiones arquitectónicas subsecuentes que hereden sus restricciones.</p>
                     
                     <div class="nota-codigo"><strong>ADR-002: Protocolo de Streaming de Video</strong>
 <strong>Estatus:</strong> Aceptado
-<strong>Contexto:</strong> Dado que los videos se almacenan en AWS S3 (ADR-001), necesitamos transmitir el contenido a navegadores web y dispositivos móviles de forma óptima bajo anchos de banda variables, evitando descargar el archivo completo.
-<strong>Decisión:</strong> Adoptar <strong>HLS (HTTP Live Streaming)</strong> de Apple.
-<strong>Justificación:</strong> Fragmenta los videos en bloques pequeños de transporte (.ts) y genera archivos de manifiesto (.m3u8). Esto permite el bitrate adaptativo dinámico y posee compatibilidad nativa absoluta en HTML5.
-<strong>Consecuencias:</strong> Mayor tiempo de procesamiento inicial para transcodificar videos en S3, pero reduce drásticamente el consumo de ancho de banda en la red.</div>
+<strong>Contexto:</strong> Al estar los archivos alojados de forma estática en AWS S3 (ADR-001), no podemos obligar a los estudiantes a descargar archivos íntegros de 500MB en redes móviles de baja calidad antes de reproducir las clases.
+<strong>Decisión:</strong> Implementar el protocolo <strong>HLS (HTTP Live Streaming)</strong> de Apple.
+<strong>Justificación:</strong> HLS segmenta el flujo multimedia en fragmentos discretos de transporte (.ts) indexados por archivos de texto manifiesto (.m3u8). Esto viabiliza el Bitrate Adaptativo: la calidad del video mutará dinámicamente según el ancho de banda del alumno.
+<strong>Consecuencias:</strong> Requiere una tarea asíncrona de transcodificación (mediante AWS Elemental MediaConvert) cada vez que un docente suba un video, incrementando los costos iniciales de procesamiento, pero garantizando fluidez móvil absoluta.</div>
 
-                    <div class="nota-codigo"><strong>ADR-003: Estrategia de Caché de Contenido</strong>
+                    <div class="nota-codigo"><strong>ADR-003: Arquitectura y Distribución de Caché Perimetral</strong>
 <strong>Estatus:</strong> Aceptado
-<strong>Contexto:</strong> HLS genera miles de peticiones HTTP repetitivas para los mismos fragmentos de video. Golpear a AWS S3 directamente causaría una latencia P99 inaceptable y costos insostenibles.
-<strong>Decisión:</strong> Implementar <strong>Amazon CloudFront (Edge Caching)</strong> acoplado a las políticas de expiración del manifiesto.
-<strong>Justificación:</strong> CloudFront replica y almacena los fragmentos de video en más de 400 puntos de presencia globales, reduciendo la latencia de red al mínimo al servir desde el nodo más cercano al estudiante/usuario.
-<strong>Consecuencias:</strong> Complejidad menor al invalidar manualmente la caché si un video se edita o reemplaza.</div>
+<strong>Contexto:</strong> Servir los bloques estáticos .ts y manifiestos .m3u8 directamente desde la región de origen de AWS S3 para miles de alumnos concurrentes provocaría latencias elevadas fuera del continente e incrementaría exponencialmente los costos de salida de datos (Egress fees).
+<strong>Decisión:</strong> Desplegar **Amazon CloudFront** como Red de Distribución de Contenidos (CDN) interconectado con S3.
+<strong>Justificación:</strong> CloudFront interceptará las peticiones y cacheará los bloques de video en las ubicaciones de borde (Edge Locations) cercanas a los nodos de red de los estudiantes, entregando latencias inferiores a 50ms en la descarga de fragmentos.
+<strong>Consecuencias:</strong> Obliga a configurar cabeceras HTTP de control de caché (Cache-Control) estrictas y a implementar un mecanismo automático de invalidación si el material educativo es actualizado de emergencia.</div>
 
-                    <div class="nota-codigo"><strong>ADR-004: Manejo de Usuarios Concurrentes en Chat en Vivo</strong>
+                    <div class="nota-codigo"><strong>ADR-004: Gestión de Alta Concurrencia en Chat en Vivo Interactivos</strong>
 <strong>Estatus:</strong> Aceptado
-<strong>Contexto:</strong> Para la transmisión didáctica interactiva, los usuarios requieren un canal de chat en tiempo real sincronizado. El HTTP Polling tradicional saturará los servidores web.
-<strong>Decisión:</strong> Utilizar conexiones bidireccionales persistentes mediante <strong>WebSockets</strong> a través de AWS API Gateway.
-<strong>Justificación:</strong> Permite comunicación full-duplex de baja latencia con un consumo insignificante de cabeceras de red en comparación con peticiones HTTP repetitivas.
-<strong>Consecuencias:</strong> El balanceador de carga debe configurarse para mantener conexiones persistentes largas (stateful).</div>
+<strong>Contexto:</strong> En clases transmitidas por streaming, los estudiantes requieren un chat de interacción masiva en tiempo real. Utilizar arquitecturas REST tradicionales con HTTP Polling constante saturaría los hilos de los servidores web con peticiones redundantes.
+<strong>Decisión:</strong> Utilizar conexiones persistentes fullduplex mediante el protocolo **WebSockets** gestionado en AWS API Gateway.
+<strong>Justificación:</strong> WebSockets reduce la sobrecarga de transporte al eliminar las pesadas cabeceras HTTP de cada mensaje, manteniendo una única conexión TCP abierta para enviar y recibir datos instantáneamente.
+<strong>Consecuencias:</strong> Desplaza la arquitectura web de un modelo puramente sin estado (stateless) a uno con estado persistente (stateful), obligando a rastrear las sesiones activas en una base de datos en memoria ultrarrápida como Redis.</div>
                 </details>
             </div>
         </section>
 
         <section id="semana3">
             <h2>Semana 3: Estilos Arquitectónicos I — Estructurales y Clásicos</h2>
-            <p>Los estilos estructurales delimitan las fronteras lógicas y responsabilidades en el código fuente. Analizamos Capas, Microkernel y Pizarra.</p>
+            
+            <h3>3.1 La Fundación Estructural</h3>
+            <p>Los estilos arquitectónicos estructurales proveen patrones predecibles de organización interna para los sistemas de software. Su meta principal es mitigar la entropía y la complejidad del código delimitando de forma estricta las fronteras operativas y los niveles de abstracción lógicos.</p>
+
+            <h3>3.2 Arquitectura en Capas (N-Tier)</h3>
+            <p>Es el estilo fundacional más extendido. Consiste en particionar el sistema en divisiones horizontales donde cada nivel posee un rol y responsabilidad única (comúnmente: Presentación, Lógica de Negocio, Datos).</p>
+            <ul>
+                <li><strong>Aislamiento de Capas:</strong> Un cambio técnico en la base de datos subyacente no debería derramarse ni exigir modificaciones en la capa superior de interfaces de usuario.</li>
+                <li><strong>Seguridad Integrada:</strong> Cada nivel actúa de forma nativa como una frontera de validación estricta que sanitiza las peticiones entrantes.</li>
+                <li><strong>Riesgo Crítico - Sinkhole Pattern:</strong> Antipatrón severo en el cual las solicitudes transitan a través de múltiples capas del software de forma secuencial sin ejecutar ningún procesamiento de valor o lógica de negocio real, actuando como simples pasamanos de datos y degradando la latencia del microsegundo.</li>
+            </ul>
+
+            <h3>3.3 Arquitectura de Microkernel (Plug-ins)</h3>
+            <p>Este estilo desacopla de forma drástica las operaciones básicas del sistema de aquellas funcionalidades complementarias o altamente volátiles.</p>
+            <ul>
+                <li><strong>Core System:</strong> Alberga la lógica algorítmica mínima indispensable para que la aplicación exista y se mantenga en ejecución. Es rígido y altamente optimizado.</li>
+                <li><strong>Plug-ins:</strong> Componentes de software independientes y aislados que inyectan reglas de negocio especializadas o conectores adicionales al Core sin alterarlo internamente.</li>
+                <li><strong>Ámbito de Uso:</strong> Es el estándar absoluto para construir Entornos de Desarrollo Integrados (ej. VS Code, Eclipse) y Navegadores Web. Su reto operativo es el infierno de dependencias al gestionar versiones dispares de plug-ins de terceros.</li>
+            </ul>
+
+            <h3>3.4 Patrón de Pizarra (Blackboard Pattern)</h3>
+            <p>Estilo arquitectónico diseñado específicamente para resolver problemas complejos y de naturaleza **no determinista**, donde no se dispone de un algoritmo matemático secuencial cerrado aplicable de forma unívoca (ej: Sistemas expertos de diagnóstico médico, Inteligencia Artificial avanzada, Reconocimiento lingüístico o de voz).</p>
+            <ul>
+                <li><strong>La Pizarra (Blackboard):</strong> Un repositorio de memoria global y centralizado que contiene los datos del problema y el estado del entorno.</li>
+                <li><strong>Los Expertos (Knowledge Sources):</strong> Módulos funcionales totalmente aislados y autónomos. Cada uno es especialista en resolver una subparte muy concreta del problema general. No se comunican entre sí; su única interacción es leer y escribir sobre la pizarra.</li>
+                <li><strong>El Controlador:</strong> Un bucle de evaluación que coordina la pizarra, evalúa el estado actual y determina heurísticamente qué experto posee la mayor probabilidad de éxito para activarse en el ciclo de reloj actual. Su gran vulnerabilidad es que se vuelve extremadamente complejo escribir pruebas unitarias deterministas automatizadas.</li>
+            </ul>
+
+            <h3>3.5 Matriz Comparativa Oficial de Estilos Estructurales</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estilo Arquitectónico</th>
+                        <th>Pilar de Calidad Prioritario</th>
+                        <th>Caso de Uso Ideal en el Mercado</th>
+                        <th>Complejidad / Dificultad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Capas (N-Tier)</strong></td>
+                        <td>Mantenibilidad y Segregación</td>
+                        <td>Aplicaciones Empresariales Tradicionales y CRUDs de Gestión</td>
+                        <td>Baja</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Microkernel (Plug-ins)</strong></td>
+                        <td>Flexibilidad y Extensibilidad</td>
+                        <td>IDEs de programación, Navegadores Web, Editores Gráficos</td>
+                        <td>Media</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pizarra (Blackboard)</strong></td>
+                        <td>Fiabilidad y Manejo de Incertidumbre</td>
+                        <td>Motores de IA, Sistemas Diagnósticos Médicos, Reconocimiento de Voz</td>
+                        <td>Alta</td>
+                    </tr>
+                </tbody>
+            </table>
 
             <div class="contenedor-ejercicios">
-                <h4>Sección Práctica: Aplicación de Estilos Clásicos</h4>
+                <h4>Sección Práctica / Laboratorios de Código</h4>
 
                 <details class="ejercicio-resuelto">
-                    <summary>Ejercicio Resuelto: Capa de Persistencia Desacoplada <span class="tag-tipo tag-resuelto">Resuelto</span></summary>
-                    <p><strong>Objetivo del ejercicio:</strong> Demostrar el desacoplamiento de capas mapeando la alteración de la base de datos sin afectar la interfaz gráfica.</p>
-                    <p><strong>Solución técnica:</strong> Separar las consultas mediante un Repositorio. Si la base de datos migra de MySQL a PostgreSQL, el cambio se limita exclusivamente a la capa inferior de almacenamiento, manteniendo la capa de presentación intacta.</p>
+                    <summary>Ejercicio Resuelto: Capa de Persistencia Desacoplada mediante Patrón Repositorio <span class="tag-tipo tag-resuelto">Clase</span></summary>
+                    <p><strong>Enunciado:</strong> Diseñar conceptualmente el desacoplamiento de almacenamiento para una aplicación bancaria.</p>
+                    <p><strong>Solución:</strong> Al interponer una interfaz intermedia de abstracción (Repository), si el negocio dictamina migrar el motor de persistencia desde un clúster relacional MySQL hacia uno NoSQL PostgreSQL, las firmas de los métodos de la capa de Lógica de Negocio permanecen intactas, encapsulando el impacto del cambio exclusivamente al archivo de mapeo físico de infraestructura.</p>
                 </details>
 
                 <details class="ejercicio-propuesto">
-                    <summary>Ejercicio Propuesto: Laboratorio en Código - Simulación del Patrón de Pizarra <span class="tag-tipo tag-propuesto">Resuelto por Alumno</span></summary>
-                    <p><strong>Enunciado del PDF:</strong> Implementar en código ejecutable una simulación del Patrón de Pizarra (Blackboard) donde múltiples expertos resuelvan un problema no determinista (ej. análisis de telemetría médica o descifrado parcial de datos).</p>
-                    <p><em>Solución desarrollada en JavaScript puro (Node.js/Navegador):</em></p>
-<pre class="nota-codigo">
-// 1. La Pizarra (Blackboard) - Almacena el estado y datos del problema
+                    <summary>Laboratorio Programado: Simulación Funcional del Patrón de Pizarra <span class="tag-tipo tag-propuesto">Resuelto por Alumno</span></summary>
+                    <p><strong>Reto del PDF de la materia:</strong> Desarrollar en código nativo limpio una simulación ejecutable del patrón Blackboard donde un controlador coordine expertos de salud sobre una memoria centralizada.</p>
+                    <p><em>Código JavaScript Semántico y Académico:</em></p>
+                    <div class="nota-codigo">
+<pre class="pre-bloque">
+// 1. ESTRUCTURA CENTRAL DE LA PIZARRA (BLACKBOARD)
 class Blackboard {
     constructor() {
-        this.datosMedicos = { presion: 140, ritmoCardiaco: 105, oxigeno: 88 };
-        this.diagnosticos = [];
-        this.problemaResuelto = false;
+        // Estado inicial de telemetría de un paciente en emergencias
+        this.telemetriaPaciente = { presionArterial: 145, pulsoCardiaco: 110, saturacionOxigeno: 86 };
+        this.alertasDiagnosticas = [];
+        this.analisisFinalizado = false;
     }
 }
 
-// 2. Expertos (Knowledge Sources) - Módulos especializados independientes
+// 2. ENTORNO DE EXPERTOS AUTÓNOMOS (KNOWLEDGE SOURCES)
 class ExpertoCardiologia {
     puedeContribuir(blackboard) {
-        return blackboard.datosMedicos.ritmoCardiaco > 100 && !blackboard.diagnosticos.includes("Taquicardia Detectada");
+        // Se activa si hay taquicardia latente y la alerta no ha sido escrita
+        return blackboard.telemetriaPaciente.pulsoCardiaco > 100 && 
+               !blackboard.alertasDiagnosticas.includes("ALERTA CRÍTICA: Taquicardia Detectada");
     }
     ejecutar(blackboard) {
-        blackboard.diagnosticos.push("Taquicardia Detectada");
-        console.log("-> [Experto Cardiología]: Ritmo cardíaco elevado. Añadiendo alerta de Taquicardia.");
+        blackboard.alertasDiagnosticas.push("ALERTA CRÍTICA: Taquicardia Detectada");
+        console.log("-> [Experto Cardiología]: Pulso crítico evaluado. Escribiendo diagnóstico en la Pizarra.");
     }
 }
 
 class ExpertoNeumologia {
     puedeContribuir(blackboard) {
-        return blackboard.datosMedicos.oxigeno < 90 && !blackboard.diagnosticos.includes("Hipoxia Celular Severa");
+        // Se activa ante hipoxia severa no registrada en la pizarra
+        return blackboard.telemetriaPaciente.saturacionOxigeno < 90 && 
+               !blackboard.alertasDiagnosticas.includes("ALERTA CRÍTICA: Hipoxia Celular Aguda");
     }
     ejecutar(blackboard) {
-        blackboard.diagnosticos.push("Hipoxia Celular Severa");
-        console.log("-> [Experto Neumología]: Saturación de oxígeno crítica. Añadiendo alerta de Hipoxia.");
+        blackboard.alertasDiagnosticas.push("ALERTA CRÍTICA: Hipoxia Celular Aguda");
+        console.log("-> [Experto Neumología]: Oxigenación deficiente. Escribiendo diagnóstico en la Pizarra.");
     }
 }
 
-// 3. El Controlador - Gestiona el bucle de ejecución y prioridades
-class Controlador {
+// 3. COMPONENTE DE CONTROL (DESPACHADOR HEURÍSTICO)
+class ControladorCentral {
     constructor(blackboard) {
         this.blackboard = blackboard;
-        this.expertos = [new ExpertoCardiologia(), new ExpertoNeumologia()];
+        this.catalogoExpertos = [new ExpertoCardiologia(), new ExpertoNeumologia()];
     }
 
-    iniciarBucle() {
-        console.log("=== INICIANDO SISTEMA EXPERTO DE PIZARRA ===");
-        let cambiosEfectuados = true;
+    iniciarCicloProcesamiento() {
+        console.log("=== INICIANDO MOTOR DE EVALUACIÓN BLACKBOARD ===");
+        let huboCambiosEnCiclo = true;
 
-        while (cambiosEfectuados && !this.blackboard.problemaResuelto) {
-            cambiosEfectuados = false;
-            
-            for (let experto of this.expertos) {
+        // El ciclo corre de manera optimista mientras los expertos sigan aportando conocimiento
+        while (huboCambiosEnCiclo && !this.blackboard.analisisFinalizado) {
+            huboCambiosEnCiclo = false;
+
+            for (let experto of this.catalogoExpertos) {
                 if (experto.puedeContribuir(this.blackboard)) {
                     experto.ejecutar(this.blackboard);
-                    cambiosEfectuados = true; // Se altera la pizarra, requiere nueva iteración
+                    huboCambiosEnCiclo = true; // Forzar nueva iteración para evaluar re-impactos
                 }
             }
-            if (!cambiosEfectuados) this.blackboard.problemaResuelto = true;
+            if (!huboCambiosEnCiclo) {
+                this.blackboard.analisisFinalizado = true;
+            }
         }
-        console.log("=== ANÁLISIS FINAL DE LA PIZARRA ===");
-        console.log("Diagnósticos consolidados:", this.blackboard.diagnosticos);
+
+        console.log("=== EVALUACIÓN CONSOLIDADA EN LA PIZARRA ===");
+        console.log("Historial de Diagnósticos:", this.blackboard.alertasDiagnosticas);
     }
 }
 
-// Ejecución de la simulación didáctica
-const pizarraHospital = new Blackboard();
-const monitor = new Controlador(pizarraHospital);
-monitor.iniciarBucle();
+// INSTANCIACIÓN DIDÁCTICA PARA EXAMEN
+const casoClinico = new Blackboard();
+const evaluador = new ControladorCentral(casoClinico);
+evaluador.IniciarCicloProcesamiento();
 </pre>
+                    </div>
                 </details>
             </div>
         </section>
 
         <section id="semana4">
             <h2>Semana 4: Estilos II — Distribuidos y Observabilidad</h2>
-            <p>Migración de monolitos a servicios fragmentados independientes que se comunican exclusivamente por protocolos de red y exigen observabilidad estricta.</p>
+            
+            <h3>4.1 El Cambio de Paradigma</h3>
+            <p>Iniciamos la transición drástica desde arquitecturas monolíticas de proceso único tradicionales (donde todos los módulos del sistema conviven compartiendo memoria física en un único servidor) hacia **ecosistemas fragmentados distribuidos** que se ven obligados a interactuar cruzando la topología de la red mediante protocolos de transporte.</p>
+
+            <h3>4.2 Anatomía de los Microservicios</h3>
+            <ul>
+                <li><strong>Descomposición Funcional (Bounded Context):</strong> Cada unidad de despliegue se circunscribe exclusivamente a un dominio acotado del negocio. Esta estricta separación reduce sustancialmente el radio de explosión ante incidentes críticos de producción: si el microservicio secundario de "Sugerencias o Comentarios" colapsa, el core del flujo transaccional de "Ventas" sigue operando perfectamente en línea.</li>
+                <li><strong>Despliegue Independiente:</strong> Otorga autonomía organizacional e industrial completa. El equipo de "Pasarelas de Pago" puede empaquetar, compilar e instalar parches en producción múltiples veces al día de forma ágil sin necesidad de solicitar permisos ni congelar las operaciones de los ingenieros del equipo de "Inventario o Catálogo".</li>
+            </ul>
+
+            <h3>4.3 Las Reglas de Oro de los Datos Distribuidos</h3>
+            <ul>
+                <li><strong>Database-per-service:</strong> Queda estrictamente prohibido que múltiples microservicios compartan accesos directos a tablas en la misma base de datos relacional. Eso introduce un acoplamiento oculto por datos destructivo. Cada servicio debe ser dueño absoluto de su persistencia.</li>
+                <li><strong>API Composition:</strong> Cuando las vistas del usuario demandan datos heterogéneos dispersos en la red, el componente centralizado **API Gateway** asume la responsabilidad de disparar llamadas paralelas concurrentes, orquestar y compactar las respuestas en una carga útil limpia (JSON unificado) optimizada para el cliente.</li>
+                <li><strong>Idempotencia Obligatoria:</strong> Atributo técnico no negociable en redes distribuidas. Asegura y garantiza que procesar la misma transacción exacta o mensaje duplicado dos o más veces en un servidor de destino no alterará de ninguna manera el balance de estado final del sistema ni duplicará cobros monetarios erróneos.</li>
+            </ul>
+
+            <h3>4.4 Consistencia de Datos en Red: 2PC vs. Patrón SAGA</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Métrica Operativa</th>
+                        <th>Two-Phase Commit (2PC)</th>
+                        <th>Patrón SAGA (Arquitectura Distribuida)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Modelo de Consistencia</strong></td>
+                        <td>Consistencia Fuerte y Atómica (Inmediata)</td>
+                        <td>Consistencia Eventual (Diferida en el tiempo)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bloqueo de Infraestructura</strong></td>
+                        <td>Sí (Bloquea registros de bases de datos de extremo a extremo)</td>
+                        <td>No (Es optimista, no congela recursos globales)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nivel de Escalabilidad</strong></td>
+                        <td>Baja (Produce cuellos de botella severos en red)</td>
+                        <td>Alta (Flujos puramente asíncronos desacoplados)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estrategia frente a Errores</strong></td>
+                        <td>Rollback Transaccional Automático nativo</td>
+                        <td>Ejecución secuencial de **Transacciones Compensatorias**</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4.5 La Nueva Era de la Observabilidad</h3>
+            <p>La observabilidad trasciende al monitoreo reactivo clásico. Se define formalmente como la capacidad matemática y de ingeniería para deducir e inferir de forma precisa los estados de salud internos e incidencias anómalas de un ecosistema distribuido analizando únicamente sus salidas externas. Se apoya en **Los Tres Pilares de la Observabilidad**: </p>
+            <ul>
+                <li><strong>Logs (Registros Históricos):</strong> Líneas de texto inmutables estampadas con marcas de tiempo atómicas que describen con precisión el qué y el cuándo de un evento.</li>
+                <li><strong>Métricas (Datos Agregados):</strong> Mediciones numéricas continuas utilizadas para auditar la telemetría del hardware y software (ej. porcentajes de saturación de CPU, consumo de memoria interna, tasa de errores HTTP 5xx por minuto).</li>
+                <li><strong>Traces (Trazabilidad Distribuida):</strong> Grafos de flujo que mapean el viaje completo y los hilos de ejecución de una solicitud HTTP a través de toda la malla compleja de microservicios. Utiliza IDs correlacionales para rastrear cuellos de botella de red y latencias anómalas en el percentil **P99** (garantizando que incluso los usuarios más lentos obtengan respuestas en tiempos aceptables sub-200ms).</li>
+            </ul>
 
             <div class="contenedor-ejercicios">
-                <h4>Sección Práctica: Consistencia y Trazabilidad en Microservicios</h4>
+                <h4>Sección Práctica / Modelado de Sistemas Distribuidos</h4>
 
                 <details class="ejercicio-resuelto">
-                    <summary>Ejercicio Resuelto: Composición de API en el Gateway <span class="tag-tipo tag-resuelto">Resuelto</span></summary>
-                    <p><strong>Problema:</strong> Un frontend necesita renderizar el perfil del usuario mostrando datos de su cuenta, compras y notificaciones, pero cada módulo reside en un microservicio con su base de datos aislada (Database-per-service).</p>
-                    <p><strong>Solución implementada:</strong> El API Gateway recibe una única llamada, ejecuta llamadas concurrentes a los microservicios de cuentas, compras y notificaciones, une las respuestas en un único JSON y lo entrega optimizado al cliente.</p>
+                    <summary>Ejercicio Resuelto: Modelado de API Composition en Gateway <span class="tag-tipo tag-resuelto">Clase</span></summary>
+                    <p><strong>Desafío:</strong> El Frontend móvil de comercio electrónico requiere renderizar la pantalla inicial de un cliente conteniendo datos de su Cuenta, Compras pasadas y Alertas. Los datos viven en motores separados.</p>
+                    <p><strong>Resolución Técnica:</strong> Se configura un endpoint en el API Gateway <code>/api/v1/dashboard/profile</code>. El Gateway intercepta la cookie de sesión, dispara en paralelo tres hilos asíncronos no bloqueantes de red hacia los microservicios internos de Cuentas, Órdenes y Notificaciones, consolida un JSON plano de respuesta rápida y lo despacha en un único viaje de red de retorno al dispositivo del usuario.</p>
                 </details>
 
                 <details class="ejercicio-propuesto">
-                    <summary>Ejercicio Propuesto: Diseño Completo del Patrón SAGA Orquestado <span class="tag-tipo tag-propuesto">Resuelto por Alumno</span></summary>
-                    <p><strong>Enunciado del PDF:</strong> Modelar paso a paso una transacción distribuida utilizando el Patrón SAGA Orquestado para un flujo de comercio electrónico (Pedido, Pago e Inventario). Se debe incluir explícitamente el flujo feliz y las transacciones compensatorias en caso de que falle el inventario.</p>
+                    <summary>Reto Propuesto: Modelado Completo del Patrón SAGA Orquestado con Falla de Stock <span class="tag-tipo tag-propuesto">Resuelto por Alumno</span></summary>
+                    <p><strong>Requerimiento del PDF de la Materia:</strong> Modelar paso a paso el ciclo de vida transaccional de una compra en línea utilizando el Patrón SAGA Orquestado que involucre el Servicio de Órdenes, Servicio de Pagos y Servicio de Inventario. Debe detallar explícitamente el flujo de excepción y reversión lógica si el inventario detecta stock insuficiente.</p>
                     
-                    <p><strong>Arquitectura del Flujo Feliz (Paso a Paso):</strong></p>
+                    <p><strong>Flujo Operativo de Excepción ante Fallas:</strong></p>
                     <ol>
-                        <li>El cliente solicita comprar. El <strong>Servicio de Órdenes</strong> crea un registro en estado <code>PENDIENTE_DE_PAGO</code> y delega el control al <strong>Orquestador de SAGA</strong>.</li>
-                        <li>El Orquestador envía un comando al <strong>Servicio de Pagos</strong> para procesar el cobro. El servicio cobra con éxito y responde <code>PAGO_CONFIRMADO</code>.</li>
-                        <li>El Orquestador envía un comando al <strong>Servicio de Inventario</strong> para reservar los productos. El servicio reduce el stock y responde <code>STOCK_RESERVADO</code>.</li>
-                        <li>El Orquestador notifica al <strong>Servicio de Órdenes</strong> que cambie el estado final a <code>COMPLETADO</code>. El flujo concluye felizmente.</li>
+                        <li>El cliente envía la solicitud de compra. El **Servicio de Órdenes** crea un registro inicial en su base de datos local en estado <code>ORDEN_PENDIENTE</code> y notifica al componente central **Orquestador de SAGA**.</li>
+                        <li>El Orquestador toma el control y despacha un comando imperativo directo al **Servicio de Pagos** ordenando ejecutar el cobro. El Servicio de Pagos debita exitosamente los $50 de la cuenta del cliente y responde al Orquestador con el estatus <code>TRANSACCION_DE_PAGO_EXITOSA</code>.</li>
+                        <li>El Orquestador recibe la confirmación financiera e inmediatamente despacha un comando al **Servicio de Inventario** solicitando reservar el stock físico de los productos comprados.</li>
+                        <li>El **Servicio de Inventario** ejecuta la consulta de actualización concurrente en su base de datos local y detecta que otra sesión agotó las existencias (Stock Insuficiente). El servicio rechaza la operación y responde al Orquestador con el código de error <code>ERROR_INVENTARIO_AGOTADO</code>.</li>
+                        <li>Al recibir la señal de colapso, el Orquestador activa de inmediato el bucle de mitigación disparando de manera secuencial las **Transacciones Compensatorias (Rollback Lógico)** para restaurar la consistencia eventual del ecosistema.</li>
                     </ol>
 
-                    <p><strong>Arquitectura ante Fallo en Inventario (Transacciones Compensatorias ejecutadas por el Orquestador):</strong></p>
+                    <p><strong>Matriz Arquitectónica de Acciones Compensatorias:</strong></p>
                     <table>
                         <thead>
                             <tr>
-                                <th>Servicio Afectado</th>
-                                <th>Transacción Original Ejecutada</th>
-                                <th>Transacción Compensatoria (Rollback Lógico)</th>
+                                <th>Microservicio Interno</th>
+                                <th>Transacción Primaria Ejecutada</th>
+                                <th>Transacción Compensatoria de Reversión (Lógica SAGA)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><strong>Servicio de Órdenes</strong></td>
-                                <td>Crea orden en estado <code>PENDIENTE</code></td>
-                                <td>Actualiza orden a estado <code>CANCELADA_POR_FALTA_DE_STOCK</code></td>
+                                <td>Guarda el registro en estado <code>ORDEN_PENDIENTE</code></td>
+                                <td>Actualiza el estado de la orden a: <code>ORDEN_CANCELADA_POR_FALTA_DE_STOCK</code></td>
                             </tr>
                             <tr>
                                 <td><strong>Servicio de Pagos</strong></td>
-                                <td>Debita el dinero de la tarjeta del cliente ($50)</td>
-                                <td>Efectúa un **Reembolso completo** del dinero a la tarjeta</td>
+                                <td>Debita y cobra exitosamente $50 de la tarjeta de crédito</td>
+                                <td>Ejecuta un **Reembolso Financiero Íntegro** de los $50 a la pasarela del cliente</td>
                             </tr>
                             <tr>
                                 <td><strong>Servicio de Inventario</strong></td>
-                                <td>Falla al intentar descontar (Stock insuficiente)</td>
-                                <td>No aplica (Emite la señal de error original)</td>
+                                <td>Intento fallido de reserva de ítems físicos</td>
+                                <td>No aplica (Se asume un estado neutral sin impacto colateral de datos)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -512,17 +700,46 @@ monitor.iniciarBucle();
             </div>
         </section>
 
-        <section id="section5">
-            <h2>Semana 5: Estilos III — Reactivos, Evolutivos y Adaptabilidad</h2>
-            <p>Ecosistemas reactivos basados en eventos (EDA), segregación de lectura/escritura (CQRS) y control del diseño continuo mediante Fitness Functions en pipelines de CI/CD.</p>
+        <section id="semana5">
+            <h2>Semana 5: Estilos III — Arquitecturas Reactivas, Evolutivas y Adaptabilidad</h2>
+            
+            <h3>5.1 Arquitectura Orientada a Eventos (EDA)</h3>
+            <p>Representa la evolución hacia sistemas reactivos asíncronos en tiempo real. En lugar de forzar llamadas acopladas HTTP directas entre servicios, los componentes emiten notificaciones inmutables denominadas **Eventos de Dominio** que indican que algo relevante ha sucedido en el negocio.</p>
+            <p>Se implementa bajo el patrón de arquitectura **Publicador / Suscriptor (Pub-Sub)**:</p>
+            <ul>
+                <li><strong>Productores:</strong> Componentes de software encargados de instanciar, empaquetar y emitir el evento en red tras completar una acción de negocio.</li>
+                <li><strong>Event Brokers:</strong> Infraestructura masiva de transporte y persistencia de mensajería asíncrona encargada de enrutar y ordenar los flujos informáticos (ej. Apache Kafka, RabbitMQ).</li>
+                <li><strong>Consumidores:</strong> Servicios independientes que se suscriben voluntariamente a tópicos de su competencia e interés, reaccionando de manera asíncrona ante la recepción de los mensajes. Permite el máximo desacoplamiento espacial y temporal de la red de software.</li>
+            </ul>
+
+            <h3>5.2 Patrón CQRS (Command Query Responsibility Segregation)</h3>
+            <p>Establece la separación radical e intransigente de los modelos informáticos dedicados a la mutación de datos de aquellos dedicados a las consultas de información.</p>
+            <ul>
+                <li><strong>Commands (Comandos):</strong> Peticiones e hilos de ejecución orientados exclusivamente a alterar el estado del sistema (Escrituras, Actualizaciones, Eliminaciones). Atraviesan capas complejas de lógica de dominio, validaciones de negocio e inmutabilidades en el <em>Write Model</em>.</li>
+                <li><strong>Queries (Consultas):</strong> Peticiones de solo lectura orientadas a retornar Data Transfer Objects (DTOs) optimizados para el consumidor en el <em>Read Model</em>. No ejecutan lógica de negocio. Utilizan almacenes de datos desnormalizados de lectura ultrarrápida.</li>
+            </ul>
+            
             <div class="analogia">
-                <span>⚡ Regla de Oro CQRS:</span>
-                Las lecturas y las escrituras poseen cargas asimétricas. CQRS permite escalar el servidor de lecturas a 10 instancias si los usuarios consultan mucho, mientras que mantienes el de escrituras estable en una sola instancia.
+                <span>⚡ Justificación de CQRS (MSc. Raúl Páez):</span>
+                En el mundo real, las lecturas suelen ser 100 veces más frecuentes que las escrituras en un software transaccional masivo. CQRS permite escalar de manera asimétrica la infraestructura: puedes tener 15 servidores dedicados a responder consultas rápidas de forma desnormalizada y mantener una sola instancia robusta procesando las escrituras validadas.
             </div>
+
+            <h3>5.3 Arquitectura Evolutiva</h3>
+            <p>Reconoce que el software comercial no es un producto estático, sino un organismo dinámico sujeto a modificaciones continuas del mercado. Una arquitectura evolutiva se diseña de forma consciente para soportar cambios e incrementos guiados a través de múltiples dimensiones operativas a lo largo de su ciclo de vida, erradicando por completo la rigidez y fragilidad del diseño inicial.</p>
+
+            <h3>5.4 Funciones de Aptitud (Fitness Functions)</h3>
+            <p>Son los **guardianes automatizados del diseño arquitectónico**. Se definen matemáticamente como funciones y métricas objetivas programadas directamente dentro de los flujos automáticos de los pipelines de Integración Continua y Despliegue Continuo (CI/CD) ($f(a) \rightarrow [0,1]$).</p>
+            <p>Su misión es evaluar de forma continua en cada commit qué tan alineada está la base de código del proyecto con los objetivos de calidad preestablecidos, bloqueando de manera automatizada el paso a entornos productivos si se detectan desvíos severos en:</p>
+            <ul>
+                <li>Rendimiento y latencias máximas tolerables (Performance).</li>
+                <li>Brechas y vulnerabilidades críticas de seguridad (Security).</li>
+                <li>Límites permitidos de deuda técnica y acoplamiento cíclico de paquetes (Mantenibilidad).</li>
+                <li>Métricas de cobertura y legalidad de software.</li>
+            </ul>
         </section>
 
         <footer>
-            Manual Didáctico Técnico con Laboratorios Resueltos - Examen Arquitectura de Software<br>
+            Manual Completo Unificado (Teoría + Prácticas Laboratoriales) | Examen Arquitectura de Software<br>
             &copy; 2026 IST Yavirac - Quito, Ecuador. Código HTML Puro y Semántico.
         </footer>
     </main>
