@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Arquitectura de Software - IST Yavirac</title>
+    <style>
+        :root {
+            --bg-principal: #0f172a;
+            --bg-tarjeta: #1e293b;
+            --texto-claro: #f8fafc;
+            --texto-mutado: #94a3b8;
+            --azul-tecnologico: #38bdf8;
+            --azul-oscuro: #0369a1;
+            --verde-exito: #4ade80;
+            --borde: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-principal);
+            color: var(--texto-claro);
+            line-height: 1.6;
+            display: flex;
+        }
+
+        /* Barra Lateral de Navegación */
+        nav {
+            width: 280px;
+            background-color: var(--bg-tarjeta);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-right: 1px solid var(--borde);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        nav h2 {
+            font-size: 1.2rem;
+            color: var(--azul-tecnologico);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--borde);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-bottom: 12px;
+        }
+
+        nav ul li a {
+            color: var(--texto-mutado);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+            padding-left: 18px;
+        }
+
+        /* Contenedor Principal de Lectura */
+        main {
+            margin-left: 280px;
+            padding: 40px 60px;
+            width: calc(100% - 280px);
+            max-width: 1200px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--borde);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--texto-claro);
+        }
+
+        header p {
+            color: var(--azul-tecnologico);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .meta-info {
+            font-size: 0.85rem;
+            color: var(--texto-mutated);
+            margin-top: 5px;
+        }
+
+        /* Secciones de las Semanas */
+        section {
+            background-color: var(--bg-tarjeta);
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            scroll-margin-top: 20px;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            color: var(--azul-tecnologico);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--borde);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--texto-claro);
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            color: var(--texto-claro);
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            color: var(--texto-claro);
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        strong {
+            color: var(--azul-tecnologico);
+        }
+
+        /* Estilos de Tablas Didácticas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid var(--borde);
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Bloques de Alerta Didáctica (Analogías) */
+        .analogia {
+            background-color: rgba(56, 189, 248, 0.1);
+            border-left: 4px solid var(--azul-tecnologico);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .analogia span {
+            font-weight: bold;
+            color: var(--azul-tecnologico);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .nota-codigo {
+            background-color: #090d16;
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            border-radius: 6px;
+            color: var(--verde-exito);
+            border: 1px solid var(--borde);
+            margin: 10px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: var(--texto-mutado);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--borde);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>Contenido</h2>
+        <ul>
+            <li><a href="#semana1">Semana 1: Pilares Arquitectónicos</a></li>
+            <li><a href="#semana2">Semana 2: Documentación ADR</a></li>
+            <li><a href="#semana3">Semana 3: Estilos Estructurales</a></li>
+            <li><a href="#semana4">Semana 4: Estilos Distribuidos</a></li>
+            <li><a href="#semana5">Semana 5: Reactivos y Evolutivos</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header>
+            <h1>Manual de Arquitectura de Software</h1>
+            <p>Estructura de Aprendizaje Cronológica y Didáctica</p>
+            <div class="meta-info">
+                <strong>Estudiante:</strong> Pablo Reyes | <strong>Quinto Semestre</strong><br>
+                <strong>Docente:</strong> MSc. Raúl Páez | <strong>Institución:</strong> IST Yavirac | <strong>Periodo:</strong> 2026-I
+            </div>
+        </header>
+
+        <section id="semana1">
+            <h2>Semana 1: Atributos de Calidad y El Arte del "Trade-off"</h2>
+            <p>La <strong>Arquitectura de Software</strong> representa el conjunto de decisiones estratégicas y estructurales que son difíciles de cambiar una vez implementadas. No define aspectos estéticos superficiales, sino el comportamiento y rendimiento del sistema bajo escenarios críticos de presión.</p>
+            
+            <div class="analogia">
+                <span>💡 Analogía del Arquitecto:</span>
+                Mientras la programación se asemeja a colocar los ladrillos y el cemento, la arquitectura define la naturaleza del edificio. Un hospital priorizará energía ininterrumpida (Disponibilidad), una discoteca requerirá un piso que soporte altas cargas dinámicas (Escalabilidad), y una vivienda común buscará optimizar el presupuesto (Costo/Mantenibilidad).
+            </div>
+
+            <h3>El Gran Dilema: El "Trade-off" (Sacrificios)</h3>
+            <p>No existe un sistema de software perfecto que cumpla con ser infinitamente veloz, 100% seguro, gratuito y extremadamente fácil de codificar. La regla de oro dicta que para maximizar un atributo de calidad, inevitablemente se debe mitigar o sacrificar otro.</p>
+
+            <h3>Requisitos Arquitectónicamente Significativos (ASRs)</h3>
+            <ul>
+                <li><strong>Disponibilidad (Availability):</strong> Mide el porcentaje de tiempo que el sistema permanece operativo y respondiendo. Se calcula con la métrica de "nueves" (ej. 99.999% representa el estándar de oro con un límite máximo de 5 minutos de caída anual). Se consigue eliminando Puntos Únicos de Fallo (SPOF) mediante redundancia y balanceadores de carga.</li>
+                <li><strong>Escalabilidad (Scalability):</strong> Capacidad de procesar un incremento de carga de trabajo mediante la adición de recursos informáticos.
+                    <ul>
+                        <li><em>Vertical (Scaling Up):</em> Añadir potencia (RAM, CPU, SSD) a un servidor existente. Es simple pero posee límites físicos costosos.</li>
+                        <li><em>Horizontal (Scaling Out):</em> Agregar múltiples servidores independientes que interactúan en red. Prácticamente ilimitada pero requiere software diseñado para entornos distribuidos.</li>
+                    </ul>
+                </li>
+                <li><strong>Resiliencia:</strong> La resiliencia no consiste en evadir fallos de manera absoluta, sino en poseer mecanismos automáticos para recuperarse de ellos y garantizar la continuidad operativa. Implementa patrones como el <em>Circuit Breaker (Disyuntor)</em> para aislar servicios colapsados y el patrón <em>Retry</em> para reintentar conexiones transitorias de red.</li>
+                <li><strong>Fiabilidad (Reliability):</strong> Probabilidad de que el sistema efectúe correctamente sus funciones operativas sin alteraciones ni corrupciones de datos en un periodo de tiempo determinado. Se evalúa bajo las métricas de <em>MTBF</em> (Tiempo promedio entre fallos) y <em>MTTR</em> (Tiempo promedio de reparación).</li>
+                <li><strong>Durabilidad (Persistence & Longevidad):</strong> Asegura que una transacción confirmada permanezca inalterable y persistida en almacenamiento físico ante apagones o catástrofes de hardware. Arquitectónicamente, también define la capacidad del código para evolucionar y ser mantenido a largo plazo sin requerir reescrituras desde cero.</li>
+            </ul>
+        </section>
+
+        <section id="semana2">
+            <h2>Semana 2: Documentación y Diseño Arquitectónico (ADRs)</h2>
+            <p>La documentación en la arquitectura de software no representa un artefacto burocrático secundario, sino la <strong>infraestructura de conocimiento compartido</strong> del proyecto. Su meta es mitigar la pérdida de contexto que sufre un equipo cuando sus integrantes cambian en el tiempo.</p>
+            
+            <div class="nota-codigo">
+                "Code tells you HOW. Comments tell you WHAT. Documentation tells you WHY."
+            </div>
+
+            <h3>Architecture Decision Records (ADRs)</h3>
+            <p>Un ADR es un documento breve que captura una decisión de diseño crítica, su justificación racional, las alternativas evaluadas y las repercusiones sistémicas futuras.</p>
+
+            <h3>Estructura Anatomía Completa de un ADR</h3>
+            <ol>
+                <li><strong>Título:</strong> Identificador numérico corto junto a la resolución (ej. <em>ADR-001: Adopción de PostgreSQL para Persistencia Relacional</em>).</li>
+                <li><strong>Estatus:</strong> Estado actual de la decisión (Propuesto, Aceptado, Rechazado, Superado).</li>
+                <li><strong>Contexto:</strong> Describe las fuerzas tecnológicas, restricciones del negocio, requisitos y limitaciones actuales que motivan la necesidad de decidir.</li>
+                <li><strong>Decisión:</strong> Declaración clara, explícita y accionable del camino tecnológico o estructural seleccionado.</li>
+                <li><strong>Consecuencias:</strong> Análisis objetivo de los compromisos adquiridos. Debe listar los impactos positivos, los negativos (trade-offs) y la deuda técnica asumida junto a su plan de mitigación.</li>
+            </ol>
+        </section>
+
+        <section id="semana3">
+            <h2>Semana 3: Estilos Arquitectónicos I — Estructurales y Clásicos</h2>
+            <p>Los estilos estructurales resuelven el problema de organizar la complejidad del código fuente delimitando las responsabilidades operativas mediante abstracciones rígidas y fronteras lógicas.</p>
+
+            <h3>1. Arquitectura en Capas (N-Tier)</h3>
+            <p>Organiza los componentes del software de forma horizontal en niveles de responsabilidad segregados. Las capas superiores consumen servicios de las capas inferiores, aislando la lógica y brindando barreras de validación sólidas.</p>
+            <p><em>Riesgo Crítico:</em> El <strong>Sinkhole Pattern</strong>, un antipatrón en el cual las peticiones transitan de manera secuencial a través de múltiples capas sin ejecutar ninguna lógica de negocio real, provocando caídas de rendimiento innecesarias.</p>
+
+            <h3>2. Arquitectura de Microkernel (Plug-ins)</h3>
+            <p>Separa las funcionalidades esenciales de las complementarias. Consta de dos elementos clave: el <em>Core System</em> (lógica mínima fundamental para que la app exista) y los <em>Plug-ins</em> (módulos independientes y acoplables que añaden valor de negocio de forma aislada). Su despliegue tiende a volverse complejo al gestionar la compatibilidad de versiones de múltiples complementos.</p>
+
+            <h3>3. Patrón de Pizarra (Blackboard)</h3>
+            <p>Especializado para abordar problemas no deterministas cuya solución algorítmica secuencial es inviable (ej. reconocimiento de voz, IA, sistemas expertos). Se compone de una <em>Pizarra</em> (memoria global centralizada que alberga los datos del problema), un conjunto de <em>Expertos</em> (módulos funcionales especializados) y un <em>Controlador</em> encargado de decidir dinámicamente qué experto debe actuar sobre la pizarra. Su gran reto es la extrema dificultad para diseñar pruebas unitarias automatizadas eficientes.</p>
+
+            <h3>Tabla Comparativa de Estilos Estructurales</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Estilo Arquitectónico</th>
+                        <th>Pilar de Calidad Prioritario</th>
+                        <th>Caso de Uso Ideal</th>
+                        <th>Complejidad de Implementación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Capas (N-Tier)</strong></td>
+                        <td>Mantenibilidad</td>
+                        <td>Aplicaciones Empresariales tradicionales y CRUDs</td>
+                        <td>Baja</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Microkernel</strong></td>
+                        <td>Flexibilidad</td>
+                        <td>IDEs (Editores de código), Navegadores Web</td>
+                        <td>Media</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pizarra (Blackboard)</strong></td>
+                        <td>Fiabilidad (IA)</td>
+                        <td>Sistemas de Diagnóstico Médico y Motores de IA</td>
+                        <td>Alta</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="semana4">
+            <h2>Semana 4: Estilos II — Distribuidos y Observabilidad</h2>
+            <p>Plantea una evolución radical: migrar de monolitos de proceso único hacia ecosistemas fragmentados de servicios autónomos que colaboran obligatoriamente a través de protocolos de red.</p>
+
+            <h3>Anatomía de los Microservicios</h3>
+            <ul>
+                <li><strong>Descomposición Funcional:</strong> Cada servicio se delimita bajo un contexto acotado (<em>Bounded Context</em>) de negocio. Esto minimiza el radio de explosión: si el microservicio de "Reseñas" colapsa, el flujo crítico de "Compras" sigue operando perfectamente.</li>
+                <li><strong>Despliegue Independiente:</strong> Otorga autonomía a los equipos técnicos para actualizar componentes en producción de manera ágil sin sincronizaciones masivas ni bloqueos organizacionales.</li>
+            </ul>
+
+            <h3>Gestión de Datos Distribuidos: 2PC vs. Patrón SAGA</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Característica Operativa</th>
+                        <th>Two-Phase Commit (2PC)</th>
+                        <th>Patrón SAGA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Consistencia de Datos</strong></td>
+                        <td>Fuerte y Atómica (Inmediata)</td>
+                        <td>Eventual (Asíncrona)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mecanismo de Bloqueo</strong></td>
+                        <td>Sí (Bloquea recursos de DB de extremo a extremo)</td>
+                        <td>No (Optimista, sin bloqueos de infraestructura)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nivel de Escalabilidad</strong></td>
+                        <td>Baja (Genera cuellos de botella severos)</td>
+                        <td>Alta (Flujos puramente asíncronos en red)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estrategia ante Fallos</strong></td>
+                        <td>Rollback Transaccional Automático</td>
+                        <td>Ejecución secuencial de Transacciones Compensatorias</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>La Nueva Era de la Observabilidad</h3>
+            <p>Es la capacidad avanzada de inferir y diagnosticar los estados e incidencias internas de un sistema distribuido analizando exclusivamente sus salidas externas. Se fundamenta en <strong>Los Tres Pilares de la Observabilidad</strong>:</p>
+            <ul>
+                <li><strong>Logs:</strong> Registros inmutables y discretos en el tiempo que detallan el qué y el cuándo de un suceso técnico.</li>
+                <li><strong>Métricas:</strong> Datos numéricos agregados de forma continua para evaluar la salud e infraestructura (uso de CPU, memoria, tasa de errores).</li>
+                <li><strong>Traces (Trazas Distribuidas):</strong> Mapean el viaje exacto e hilos de ejecución de una petición de usuario al cruzar la red de microservicios. Esencial para detectar latencias extremas.</li>
+            </ul>
+        </section>
+
+        <section id="semana5">
+            <h2>Semana 5: Estilos III — Reactivos, Evolutivos y Adaptabilidad</h2>
+            <p>Los entornos de alta demanda exigen que las arquitecturas dejen de operar bajo peticiones imperativas tradicionales y evolucionen hacia paradigmas basados en respuestas asíncronas en tiempo real y resiliencia al cambio continuo.</p>
+
+            <h3>Arquitectura Orientada a Eventos (EDA)</h3>
+            <p>Los componentes reaccionan dinámicamente ante sucesos significativos de negocio en lugar de acoplarse con llamadas HTTP directas. Se fundamenta en el patrón <strong>Publicador/Suscriptor (Pub-Sub)</strong> compuesto por:</p>
+            <ul>
+                <li><strong>Productores:</strong> Emisores encargados de encapsular y notificar el cambio de estado.</li>
+                <li><strong>Event Brokers:</strong> Canales e intermediarios masivos de mensajería asíncrona (ej. Apache Kafka o RabbitMQ).</li>
+                <li><strong>Consumidores:</strong> Servicios independientes que escuchan los tópicos de su interés y ejecutan su lógica al recibir el evento.</li>
+            </ul>
+
+            <h3>Patrón CQRS (Command Query Responsibility Segregation)</h3>
+            <p>Establece de forma estricta la separación radical de los modelos de lectura y escritura del sistema. Las escrituras (<strong>Commands</strong>) se encargan de alterar el estado aplicando lógica y reglas de validación severas, mientras que las consultas (<strong>Queries</strong>) consumen modelos o vistas de datos desnormalizadas optimizadas exclusivamente para máxima velocidad de respuesta.</p>
+
+            <h3>Arquitectura Evolutiva y Funciones de Aptitud (Fitness Functions)</h3>
+            <p>Entiende que el desarrollo de software no es estático. Una arquitectura evolutiva soporta de manera nativa modificaciones incrementales y guiadas a lo largo del ciclo de vida del producto sin degradar su estructura inicial.</p>
+            <p>Para automatizar la protección del diseño contra la degradación técnica, se configuran las <strong>Fitness Functions (Funciones de Aptitud)</strong>. Estas constituyen métricas objetivas programadas directamente en los pipelines de Integración Continuo y Despliegue Continuo (CI/CD) que auditan de forma automatizada los umbrales de rendimiento, acoplamiento de código, deudas técnicas y brechas de seguridad antes de permitir un paso a producción.</p>
+        </section>
+
+        <footer>
+            Manual Didáctico Técnico - Diseñado para Examen de Arquitectura de Software<br>
+            &copy; 2026 IST Yavirac - Quito, Ecuador. Código HTML Puro y Semántico.
+        </footer>
+    </main>
+
+</body>
+</html>
