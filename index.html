@@ -16,6 +16,9 @@
             --borde: #334155;
             --codigo-bg: #090d16;
             --naranja-alerta: #fb923c;
+            --purpura-examen: #a855f7;
+            --oro-corona: #f59e0b;
+            --bg-examen-tarjeta: #1e1b4b;
         }
 
         * {
@@ -274,6 +277,82 @@
 
         .tag-resuelto { background-color: rgba(74, 222, 128, 0.2); color: var(--verde-exito); }
         .tag-propuesto { background-color: rgba(251, 146, 60, 0.2); color: var(--naranja-alerta); }
+
+        .seccion-examen h2 {
+            color: var(--purpura-examen);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.4);
+        }
+
+        .seccion-examen h3 {
+            border-left: 3px solid var(--purpura-examen);
+            color: #e9d5ff;
+        }
+
+        .contenedor-examen-bloque {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--bg-examen-tarjeta);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 10px;
+        }
+
+        .pregunta-examen details {
+            background-color: var(--bg-tarjeta);
+            border: 1px solid var(--borde);
+            border-radius: 6px;
+            margin-bottom: 12px;
+            padding: 12px;
+        }
+
+        .pregunta-examen details[open] { 
+            border-color: var(--purpura-examen); 
+        }
+
+        .pregunta-examen summary {
+            font-weight: 600;
+            color: var(--texto-claro);
+            cursor: pointer;
+            padding: 5px;
+            outline: none;
+            user-select: none;
+        }
+
+        .pregunta-examen details[open] summary {
+            color: var(--purpura-examen);
+            border-bottom: 1px solid var(--borde);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+        }
+
+        .pregunta-opcion { border-left: 4px solid var(--purpura-examen); }
+        .pregunta-vf { border-left: 4px solid var(--oro-corona); }
+
+        .tag-tipo {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            float: right;
+            text-transform: uppercase;
+        }
+
+        .tag-opcion { background-color: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
+        .tag-vf { background-color: rgba(245, 158, 11, 0.2); color: var(--oro-corona); }
+
+        .respuesta-correcta-bloque {
+            background-color: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.4);
+            border-radius: 6px;
+            padding: 12px;
+            color: #e2e8f0;
+            margin-top: 8px;
+        }
+
+        .respuesta-correcta-bloque strong {
+            color: var(--verde-exito);
+            display: block;
+            margin-bottom: 4px;
+        }
 
         footer {
             text-align: center;
@@ -736,6 +815,427 @@ evaluador.IniciarCicloProcesamiento();
                 <li>Límites permitidos de deuda técnica y acoplamiento cíclico de paquetes (Mantenibilidad).</li>
                 <li>Métricas de cobertura y legalidad de software.</li>
             </ul>
+        </section>
+
+        <section id="correccion-examen" class="seccion-examen">
+            <h2>🔥 Cierre de Semana 5: Corrección Oficial - Examen Parcial 1</h2>
+            <p>A continuación se presenta la resolución interactiva completa del Examen Parcial de la materia. Utilizando los bloques desplegables para poner a prueba el conocimiento técnico.</p>
+
+            <h3>Bloque 1: Fundamentos, Atributos de Calidad y Modelo C4</h3>
+            <div class="contenedor-examen-bloque">
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>1. Al evaluar requerimientos de software, ¿cuál describe un trade-off crítico al integrar LLMs de terceros? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Incremento notable en la precisión y capacidades generativas a expensas de una mayor latencia de red e inferencia y costos variables por tokens.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>2. En el modelado de escenarios de atributos de calidad utilizando plantillas estándar, ¿qué representa el "Estímulo"? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Una condición o evento que llega al sistema, como un pico de tráfico, un fallo de red o un timeout de una API externa.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>3. Para mitigar los riesgos de disponibilidad y latencia alta al consumir APIs de IA de terceros, ¿cuál es la estrategia arquitectónica más adecuada? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Implementar patrones de resiliencia como almacenamiento en caché (caching) de respuestas comunes, colas de procesamiento asíncrono y Circuit Breakers.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>4. ¿Cuál es el propósito primordial de redactar un Registro de Decisión de Arquitectura (ADR)? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Capturar de manera clara el contexto, las restricciones, los criterios de diseño, las alternativas descartadas y el "porqué" de una elección tecnológica.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>5. El modelo C4 propone una visualización jerárquica. ¿Qué elementos clave se representan en el Nivel 1 (Diagrama de Contexto)? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: C</strong> El sistema de software como una caja negra, los usuarios que interactúan con él y los sistemas externos o dependencias de terceros con los que se conecta.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>6. En el modelo C4, ¿cómo se define conceptualmente un "Contenedor" (Nivel 2)? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Cualquier unidad de despliegue ejecutable de forma independiente, como una SPA web, una aplicación móvil, una API o un almacén de datos.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>7. Al redactar un ADR, ¿qué sección se encarga de mapear los beneficios, compromisos o deudas técnicas asumidas tras aceptar la decisión? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: C</strong> Consecuencias (Consequences).
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>8. Si un sistema transaccional envía datos altamente confidenciales a una IA comercial, ¿cuál representa el mayor riesgo de seguridad arquitectónica? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> La violación de normativas de privacidad de datos (como GDPR) si los prompts contienen información sensible expuesta al entrenamiento de terceros.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>9. ¿Por qué se desaconseja mantener manualmente el Nivel 4 (Diagrama de Código) del modelo C4 en proyectos grandes? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Porque cambia con demasiada frecuencia con cada refactorización de código diaria, volviéndose obsoleto de inmediato si no se automatiza.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>10. En una plantilla de escenario de atributos de calidad, la "Medida de la Respuesta" debe caracterizarse por ser: <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Estrictamente cuantificable, medible o comprobable (ej. "en menos de 2 segundos", "0% de pérdida de paquetes").
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>11. ¿Qué información técnica se detalla en el Nivel 3 (Diagrama de Componentes) del modelo C4? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> La organización interna de un contenedor específico, mostrando sus controladores, servicios, repositorios y dependencias internas.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>12. Guardar los archivos ADR en formato Markdown (.md) dentro del mismo repositorio Git permite: <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Que la documentación evolucione junto al código, facilitando el control de versiones, auditorías técnicas e históricos transparentes.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>13. La arquitectura se limita exclusivamente a la elección del lenguaje de programación. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> La arquitectura impacta profundamente en la evolución y mantenibilidad a largo plazo, trascendiendo lenguajes puntuales.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>14. Un trade-off ocurre cuando la optimización extrema de un atributo causa una penalización inevitable en otro. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Es la regla de oro del arquitecto; no existe el sistema perfecto sin sacrificios técnicos controlados.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>15. La mantenibilidad mide la facilidad con la que un sistema puede ser modificado ante nuevas reglas de negocio. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Mide la velocidad estructural de adaptabilidad frente al cambio sin romper flujos antiguos.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>16. El modelo de lenguaje (LLM) de un tercero garantiza de forma nativa un comportamiento determinista. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> Los LLMs son probabilísticos y de naturaleza no determinista, propensos a alucinaciones.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>17. Un requerimiento funcional se enfoca en "qué" debe hacer el sistema, y el atributo de calidad define el "cómo". <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Los funcionales son los comportamientos base y los de calidad son las restricciones operativas.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>18. El uso excesivo de llamadas síncronas encadenadas a múltiples IAs externas es una excelente práctica para reducir latencia. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> El encadenamiento síncrono incrementa de forma lineal y crítica la latencia global y disminuye la resiliencia.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>19. El modelo C4 prohíbe de forma estricta el uso de diagramas UML clásicos. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> C4 es un modelo independiente de la herramienta o notación y es compatible con abstracciones UML.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>20. El "Estado" de un ADR permite saber si una decisión se encuentra aprobada, bajo propuesta o si ha sido superada. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Permite auditar en qué fase del ciclo de vida técnico se encuentra cada decisión de diseño.
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <h3>Bloque 2: Estilos Arquitectónicos Clásicos</h3>
+            <div class="contenedor-examen-bloque">
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>21. En el estilo clásico de Arquitectura en Capas Cerradas, ¿cuál es la restriction de acoplamiento más severa? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Cada capa puede comunicarse únicamente con la capa inmediatamente inferior a ella, sin saltarse niveles intermedios.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>22. ¿Qué problema arquitectónico describe el denominado "Efecto Sumidero" (Sinkhole Effect) en capas? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> El traspaso inútil de peticiones a través de múltiples capas que no realizan ninguna lógica de negocio ni transformación, actuando solo como pasamanos.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>23. Al diseñar un CRUD empresarial lineal, ¿cuál es la ventaja de la simplicidad de las Capas frente a Microkernel? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Las capas reducen significativamente el esfuerzo de diseño inicial y la complejidad de interfaces, acelerando el desarrollo si los requerimientos son lineales.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>24. El estilo arquitectónico de Microkernel se define por estar estructurado en base a dos elementos principales: <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Un núcleo central mínimo (Core System) y módulos de extensión autónomos e independientes (Plug-ins).
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>25. En una arquitectura de estilo Pizarra (Blackboard), ¿cómo interactúan las Fuentes de Conocimiento? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Evaluando de forma asíncrona y autónoma un espacio de datos centralizado (la pizarra) para proponer soluciones parciales a problemas complejos o no deterministas.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>26. ¿Cuál de las siguientes herramientas del mercado representa una clara aplicación del estilo Microkernel? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Un IDE moderno como VS Code, que funciona con un motor base liviano y expande sus capacidades (linters, lenguajes) mediante extensiones.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>27. ¿Cuál es el riesgo de permitir que un sistema evoluya hacia una estructura de Capas Abiertas? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Aumenta la flexibilidad de llamadas directas, pero eleva drásticamente el riesgo de acoplamiento difuso y dificulta la refactorización profunda.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>28. En capas tradicionales, la capa de Presentación dicta los esquemas y llaves foráneas en el motor de base de datos. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> Cada capa tiene su responsabilidad, y el almacenamiento está aislado en el nivel más bajo, lejos de la presentación.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>29. El estilo de Pizarra (Blackboard) es altamente recomendado para e-commerce que necesitan respuestas en menos de 5ms. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> Blackboard no es determinista y no está diseñado para sistemas transaccionales tradicionales de bajísima latencia homogénea.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>30. Uno de los mayores retos de Microkernel es diseñar contratos de interfaz estables en el Core para no romper plug-ins existentes. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Preservar la inmutabilidad de los contratos base asegura la compatibilidad con módulos de terceros.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>31. El bajo acoplamiento y la alta cohesión son objetivos clave de diseño que los arquitectos buscan equilibrar. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Son métricas de salud de código universales que guían cualquier patrón arquitectónico estructural.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>32. En capas cerradas, si la Capa 3 necesita información de la Capa 1, puede llamarla directamente violando la jerarquía. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> Las capas cerradas exigen un flujo secuencial estricto descendente; saltar niveles rompe el principio de aislamiento.
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <h3>Bloque 3: Microservicios, Diseño Guiado por el Dominio (DDD) y Observabilidad</h3>
+            <div class="contenedor-examen-bloque">
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>33. Al diseñar una arquitectura de Microservicios, ¿cuál representa la estrategia correcta sobre la persistencia de datos? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Desplegar una base de datos exclusiva para cada microservicio (Database-per-Service), aislando sus datos y prohibiendo consultas directas externas.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>34. ¿Qué concepto de DDD estratégico aporta la base fundamental para delimitar servicios claros y evitar un "monolito distribuido"? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Los Contextos Delimitados (Bounded Contexts).
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>35. En sistemas distribuidos complejos, ¿cuáles son los tres pilares esenciales de la Observabilidad? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Logs (Registros), Métricas (Metrics) y Trazas Distribuidas (Traces).
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>36. ¿Cuál es el principal trade-off o desventaja operativa al migrar de un monolito hacia microservicios? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Un incremento sustancial en la complejidad operativa de despliegue, automatización de infraestructura, monitoreo de red y gestión de consistencia eventual.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>37. Al descomponer un sistema, ¿qué síntoma técnico denota un alto "acoplamiento transaccional" perjudicial? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Que para completar una sola operación de escritura, un microservicio deba realizar llamadas HTTP síncronas en cadena a otros tres servicios, fallando si uno de ellos cae.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>38. La Ley de Conway postula que el diseño de software tiende a replicar las estructuras de comunicación interna de la empresa. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Los límites del sistema de software reflejan inherentemente cómo están organizados y cómo interactúan los equipos humanos.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>39. En microservicios, una Capa Anticorrupción (ACL) sirve para traducir y aislar los modelos limpios ante sistemas legados deficientes. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Actúa como un traductor lógico que impide que los vicios y malas estructuras de un sistema antiguo contaminen el nuevo dominio.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>40. Las trazas distribuidas pierden utilidad en microservicios porque es fácil diagnosticar leyendo un único archivo de log local. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> Son indispensables precisamente porque en sistemas distribuidos los logs están dispersos en múltiples servidores, haciendo muy difícil unirlos sin una traza.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>41. El tamaño ideal de un microservicio debe medido contando que no supere las 200 líneas de código fuente totales. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> El tamaño se delimita por la cohesión del dominio comercial y el Bounded Context, nunca por métricas arbitrarias de líneas de código.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>42. El API Gateway centraliza preocupaciones como enrutamiento, autenticación de tokens y control de tasa (Rate Limiting). <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Libera a los microservicios internos de lidiar con seguridad y networking perimetral repetitivo.
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <h3>Bloque 4: Arquitecturas Orientadas a Eventos, Resiliencia y Evolución</h3>
+            <div class="contenedor-examen-bloque">
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>43. En una Arquitectura Orientada a Eventos (EDA) asíncrona, ¿cuál describe la naturaleza de un "Evento"? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Un hecho histórico inmutable del pasado que ya ocurrió en el negocio (ej. "OrdenCreada") y que no puede ser borrado ni modificado.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>44. El patrón arquitectónico CQRS propone resolver la asimetría de carga de trabajo en sistemas de alto tráfico mediante: <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> La separación explícita de los modelos lógicos e infraestructura para las operaciones de modificación de estado (Commands) frente a las de lectura (Queries).
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>45. En Arquitecturas Evolutivas, ¿qué herramientas automatizadas validan que los cambios no degraden los atributos de calidad? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Funciones de Fitness (Fitness Functions) automatizadas dentro del pipeline de CI/CD.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>46. Al diseñar sistemas distribuidos resilientes, el patrón de "Circuit Breaker" (Disyuntor) se utiliza para: <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> Evitar que una aplicación sature de llamadas síncronas a un servicio externo que está caído o lento, fallando de inmediato de forma controlada y retornando un fallback.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-opcion">
+                        <summary>47. Para gestionar transacciones de negocio distribuidas asegurando consistencia eventual, ¿qué patrón es el más recomendado? <span class="tag-tipo tag-opcion">Opción Múltiple</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: B</strong> El Patrón Saga, a través de coreografía o orquestación de transacciones locales secuenciales con lógica de compensación automática ante fallos.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>48. El patrón de Event Sourcing consiste en guardar únicamente la fila con el estado final actual de un registro. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: FALSO</strong> Es justo lo contrario: se almacena secuencialmente todo el historial de eventos ocurridos para poder reconstruir cualquier punto del estado en el tiempo.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>49. Diseñar pensando en "decisiones reversibles" implica estructurar software mediante interfaces y bajo acoplamiento. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Permite postergar o cambiar elecciones técnicas de bases de datos o frameworks en el futuro sin comprometer la supervivencia del negocio.
+                        </div>
+                    </details>
+                </div>
+                <div class="pregunta-examen">
+                    <details class="pregunta-vf">
+                        <summary>50. Al adoptar EDA asíncrona, se gana desacoplamiento, pero se asume el trade-off de perder consistencia inmediata. <span class="tag-tipo tag-vf">Verdadero o Falso</span></summary>
+                        <div class="respuesta-correcta-bloque">
+                            <strong>Respuesta Correcta: VERDADERO</strong> Se acepta conscientemente la consistencia eventual de los datos a cambio de una escalabilidad masiva y tolerancia a fallos.
+                        </div>
+                    </details>
+                </div>
+            </div>
         </section>
 
         <footer>
