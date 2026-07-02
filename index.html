@@ -362,6 +362,69 @@
             border-top: 1px solid var(--borde);
             margin-top: 40px;
         }
+
+        /* ==========================================================================
+           ESTILOS PARA EL BOTÓN DE MODO CLARO / OSCURO
+           ========================================================================== */
+        .theme-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--azul-oscuro);
+            color: var(--texto-claro);
+            border: 1px solid var(--azul-tecnologico);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-btn:hover {
+            background-color: var(--azul-tecnologico);
+            color: var(--bg-principal);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Variables sobrescritas para el Modo Claro */
+        body.light-mode {
+            --bg-principal: #f1f5f9;
+            --bg-tarjeta: #ffffff;
+            --texto-claro: #0f172a;
+            --texto-mutado: #475569;
+            --borde: #cbd5e1;
+            --codigo-bg: #f8fafc;
+        }
+
+        /* Ajustes específicos de contraste para el modo claro */
+        body.light-mode nav {
+            background-color: #e2e8f0;
+            border-right: 1px solid #cbd5e1;
+        }
+
+        body.light-mode nav ul li a {
+            color: #334155;
+        }
+
+        body.light-mode nav ul li a:hover {
+            color: #0284c7;
+            background-color: #cbd5e1;
+        }
+
+        body.light-mode .pre-bloque {
+            border: 1px solid #cbd5e1;
+            color: #0f172a;
+        }
+
+        body.light-mode .analogia, 
+        body.light-mode details {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+        }
+
     </style>
 </head>
 <body>
@@ -379,6 +442,7 @@
     </nav>
 
     <main>
+        <button id="theme-toggle" class="theme-btn" aria-label="Cambiar tema">☀️ Modo Claro</button>
         <header>
             <h1>Manual de Arquitectura de Software</h1>
             <p>Estructura de Aprendizaje Cronológica y Didáctica</p>
@@ -1400,11 +1464,36 @@ if __name__ == "__main__":
                 </details>
             </div>
         </section>
-        
+
         <footer>
             Manual Completo Unificado (Teoría + Prácticas Laboratoriales) | Examen Arquitectura de Software<br>
             &copy; 2026 IST Yavirac - Quito, Ecuador. Código HTML Puro y Semántico.
         </footer>
+
+        <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const bodyElement = document.body;
+
+        // Comprobar si el usuario ya tenía una preferencia guardada anteriormente
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light') {
+            bodyElement.classList.add('light-mode');
+            themeToggleBtn.textContent = '🌙 Modo Oscuro';
+        }
+
+        // Función para alternar el tema al hacer clic
+        themeToggleBtn.addEventListener('click', () => {
+            bodyElement.classList.toggle('light-mode');
+            
+            if (bodyElement.classList.contains('light-mode')) {
+                themeToggleBtn.textContent = '🌙 Modo Oscuro';
+                localStorage.setItem('theme', 'light'); // Guarda la opción clara
+            } else {
+                themeToggleBtn.textContent = '☀️ Modo Claro';
+                localStorage.setItem('theme', 'dark');  // Guarda la opción oscura
+            }
+        });
+    </script>
     </main>
 
 </body>
