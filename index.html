@@ -374,6 +374,7 @@
             <li><a href="#semana3">Semana 3: Estilos Estructurales</a></li>
             <li><a href="#semana4">Semana 4: Estilos Distribuidos</a></li>
             <li><a href="#semana5">Semana 5: Reactivos y Evolutivos</a></li>
+            <li><a href="#semana6">Semana 6: Patrones Creacionales y Estructurales</a></li>
         </ul>
     </nav>
 
@@ -1238,6 +1239,168 @@ evaluador.IniciarCicloProcesamiento();
             </div>
         </section>
 
+        <section id="semana6">
+            <h2>Semana 6: Patrones de Diseño I — Catálogo Creacional y Estructural</h2>
+            
+            <h3>6.1 Conceptos Fundamentales de la Programación Orientada a Objetos (POO)</h3>
+            <p>Antes de sumergirse en el catálogo de soluciones de la Gang of Four (GoF), es imperativo dominar los fundamentos que sostienen el diseño robusto de software:</p>
+            <ul>
+                <li><strong>Abstracción en POO:</strong> Es el proceso mental y técnico mediante el cual aislamos las características esenciales de una entidad del mundo real, descartando los detalles superfluos o complejos de implementación. Permite modelar clases enfocadas únicamente en el <em>qué hace</em> un objeto antes de preocuparse por el <em>cómo lo hace</em>.</li>
+                <li><strong>El Constructor en POO:</strong> Es un método especial de una clase que se ejecuta de manera automática al instanciar un objeto. Su propósito arquitectónico es garantizar el correcto ciclo de vida del objeto, reservando espacio en la memoria RAM e inicializando de forma segura sus atributos obligatorios con valores estables o parámetros iniciales.</li>
+                <li><strong>Instanciar:</strong> Significa materializar un objeto específico y concreto en la memoria del computador a partir de un molde genérico predefinido llamado clase.</li>
+                <li><strong>Familias de Objetos en POO:</strong> Conjunto de componentes de software estrechamente correlacionados o dependientes entre sí que comparten un tema conceptual, estético o funcional común y están estrictamente diseñados para operar juntos de manera coherente en tiempo de ejecución (ej: botones, barras de scroll y ventanas pertenecientes exclusivamente al tema gráfico "Dark Mode").</li>
+            </ul>
+
+            <div class="analogia">
+                <span>💡 Analogía de la Instanciación y Abstracción:</span>
+                La <strong>clase</strong> equivale a los planos arquitectónicos de un vehículo (Abstracción de un automóvil). El **constructor** es la línea de ensamblaje en la fábrica que toma los materiales, y la **instanciación** es el acto exacto en el que sale un auto físico con un número de chasis único a la calle (el Objeto).
+            </div>
+
+            <h3>6.2 Categorías de la Gang of Four (GoF)</h3>
+            <p>Los 23 patrones clásicos de la GoF se clasifican según su propósito e intención técnica en tres grandes familias:</p>
+            <ol>
+                <li><strong>Creacionales:</strong> Abstraen y flexibilizan los mecanismos de creación e instanciación de objetos. Evitan que el sistema dependa del operador directo <code>new</code> o de configuraciones rígidas de constructores.</li>
+                <li><strong>Estructurales:</strong> Definen la forma idónea en que se componen, entrelazan e interactúan las clases y los objetos para conformar estructuras mucho más grandes y complejas de manera flexible y escalable, favoreciendo la composición sobre la herencia.</li>
+                <li><strong>Comportamiento:</strong> Gestionan los algoritmos, la asignación de responsabilidades y los flujos de comunicación dinámica entre los objetos interconectados.</li>
+            </ol>
+
+            <h3>6.3 Patrones Creacionales en Detalle</h3>
+            <p>Abstraen el proceso de instanciación para desacoplar el código de los detalles de inicialización:</p>
+            <ul>
+                <li><strong>Singleton:</strong> Garantiza de forma estricta que una clase posea una única e inequívoca instancia viva en todo el ciclo de vida del sistema, proveyendo un punto de acceso global y centralizado a dicho recurso. <em>Ejemplo:</em> Un administrador único de configuraciones de la app o un Pool centralizado de Conexiones a Base de Datos.</li>
+                <li><strong>Factory Method:</strong> Define una interfaz abstracta para la creación de un objeto, pero delega la responsabilidad a las subclases para que decidan la clase exacta a instanciar en tiempo de ejecución. <em>Ejemplo:</em> Un sistema logístico donde una fábrica despacha transporte terrestre (<code>Camion</code>) o marítimo (<code>Barco</code>) dependiendo del destino.</li>
+                <li><strong>Abstract Factory:</strong> Proporciona una interfaz para producir familias completas de objetos relacionados o dependientes entre sí sin necesidad de acoplarse o especificar sus clases concretas directas. <em>Ejemplo:</em> Un kit de herramientas UI que genera interfaces nativas consistentes para Windows (<code>BotonWin</code>, <code>CheckboxWin</code>) o Mac (<code>BotonMac</code>, <code>CheckboxMac</code>).</li>
+                <li><strong>Builder:</strong> Descompone y separa el proceso de construcción de un objeto complejo de su representación final, permitiendo que el mismo proceso de construcción paso a paso sea capaz de moldear múltiples variaciones distintas. <em>Ejemplo:</em> Un constructor de consultas complejas de base de datos (QueryBuilder) agregando de forma condicional <code>select()</code>, <code>where()</code> y <code>join()</code>.</li>
+                <li><strong>Prototype:</strong> Permite la clonación o copia exacta de objetos preexistentes duplicando directamente su estado en memoria RAM, sin que el código de cliente tenga que depender de las clases específicas ni de costosos constructores iniciales. <em>Ejemplo:</em> Duplicar miles de monstruos o enemigos en un videojuego que comparten texturas y estadísticas idénticas, variando solo su posición en pantalla.</li>
+            </ul>
+
+            <h3>6.4 Análisis de Código Avanzado: Singleton de Alto Impacto (Diapositiva 5 Desarrollada)</h3>
+            <p>A continuación se expande el ejemplo elemental de la presentación hacia un Singleton robusto y seguro para entornos de alta concurrencia multihilo (Thread-Safe), esencial en la arquitectura corporativa moderna:</p>
+
+            <div class="nota-codigo">
+<pre class="pre-bloque">
+import threading
+
+class DatabaseConnectionPool:
+    _instance = None
+    _lock = threading.Lock()  # Lock de exclusión mutua para entornos multihilo
+
+    def __new__(cls):
+        # Implementación del patrón de doble verificación (Double-Checked Locking)
+        if cls._instance is None:
+            with cls._lock:
+                if cls._instance is None:
+                    cls._instance = super().__new__(cls)
+                    cls._instance._inicializar_pool()
+        return cls._instance
+
+    def _inicializar_pool(self):
+        self.conexion_string = "postgresql://db_user:secret@localhost:5432/produccion"
+        self.max_conexiones = 20
+        self.conexiones_activas = []
+        print(" [CONEXIÓN ÚNICA] Pool de conexiones inicializado de forma segura y única en memoria.")
+
+    def obtener_conexion(self):
+        return f"Conexión activa despachada bajo {self.conexion_string}"
+
+# Demostración en tiempo de ejecución
+pool_a = DatabaseConnectionPool()
+pool_b = DatabaseConnectionPool()
+
+print(f"¿Ambas variables apuntan a la misma instancia en memoria?: {pool_a is pool_b}")
+</pre>
+            </div>
+
+            <h3>6.5 Patrones Estructurales en Detalle</h3>
+            <p>Se enfocan en cómo las clases y los objetos se entrelazan armónicamente para dar soporte a sistemas expansivos:</p>
+            <ul>
+                <li><strong>Adapter:</strong> Actúa como un traductor estructural que permite que dos interfaces inicialmente incompatibles colaboren y trabajen juntas de forma transparente, envolviendo la interfaz antigua o externa para adecuarla a la firma esperada por el cliente. <em>Ejemplo real fuera de SO:</em> Un lector físico de tarjetas SD adaptado y conectado a un puerto USB de una computadora actual, o un convertidor de corriente de enchufe europeo a toma americana.</li>
+                <li><strong>Bridge:</strong> Desacopla y separa radicalmente una abstracción de su implementación práctica, posibilitando que ambas dimensiones de diseño evolucionen, varíen y crezcan de forma totalmente independiente. <em>Ejemplo conceptual:</em> El control remoto universal (Abstracción de control) frente a las televisiones concretas de marcas como Sony o Samsung (Implementación). Se pueden añadir nuevos botones al control sin alterar la electrónica interna de los televisores.</li>
+                <li><strong>Composite:</strong> Estructura y compone objetos en complejas organizaciones arbóreas para representar jerarquías de tipo parte-todo, logrando que el cliente trate exactamente por igual a los elementos individuales simples y a las composiciones colectivas ramificadas. <em>Ejemplo en POO:</em> Un sistema de facturación de menús donde un ítem puede ser un producto individual (<code>Hamburguesa</code>) o un combo de productos (<code>ComboFamiliar</code> que agrupa papas, gaseosas y hamburguesas). Ambos heredan de una interfaz común <code>Vendible</code> y exponen el método <code>calcular_precio()</code> de manera idéntica.</li>
+                <li><strong>Decorator:</strong> Inyecta responsabilidades, lógicas funcionales o comportamientos adicionales a un objeto específico de forma completamente dinámica en caliente, sin alterar en absoluto su estructura interna original y evitando el crecimiento desmesurado de la jerarquía por herencia rígida. <em>Ejemplo conceptual:</em> La preparación de un café base. Tienes el <code>CafeSolo</code> y dinámicamente le añades decoradores como <code>ConLeche</code>, <code>ConChocolate</code> o <code>ConAzucar</code>, acumulando costos y propiedades de forma líquida.</li>
+                <li><strong>Facade (Fachada):</strong> Proporciona una interfaz unificada, extremadamente simplificada y de alto nivel que sirve de compuerta única de acceso frente a un subsistema complejo de clases ocultando toda la fricción técnica y llamadas engorrosas del backend. <em>Ejemplo conceptual:</em> El botón "Comprar con 1 clic" en una tienda e-commerce. Oculta el proceso en cadena de verificar inventario físico, procesar pago con banco externo, emitir factura legal en PDF y coordinar con la empresa transportista.</li>
+                <li><strong>Flyweight (Peso Ligero):</strong> Minimiza el consumo crítico de memoria RAM compartiendo de manera eficiente y centralizada fragmentos de estados comunes e intrínsecos entre una cantidad masiva de objetos de naturaleza similar. <em>Ejemplo conceptual:</em> Un simulador de bosque en un videojuego con 100,000 árboles. Los datos pesados comunes (modelo 3D de las hojas, texturas de la corteza) se almacenan en una única instancia Flyweight, mientras que los datos extrínsecos ligeros (posición X, Y, Z de cada árbol y nivel de daño) se almacenan por separado.</li>
+            </ul>
+
+            <h3>6.6 Solución de Ingeniería: Resolución del Problema de Integración (Diapositiva 9)</h3>
+            <p>La presentación plantea un problema clásico de arquitectura: la necesidad de integrar una API externa de pagos internacionales que expone el método estricto <code>pay_usd()</code>, mientras que nuestra arquitectura local ya consolidada exige de manera obligatoria interactuar a través de la firma <code>procesar_cobro()</code>.</p>
+            <p>A continuación se detalla la simulación y resolución exacta mediante el patrón **Adapter**:</p>
+
+            <div class="nota-codigo">
+<pre class="pre-bloque">
+# 1. Componente de Terceros (Incompatible e Inmodificable)
+class GatewayPagoExternoUSD:
+    def pay_usd(self, amount_usd: float):
+        print(f" -> [API Terceros] Transacción autorizada exitosamente por ${amount_usd} USD.")
+
+# 2. Interfaz Esperada por Nuestra Arquitectura Local
+class TARGET_ProcesadorPagoLocal:
+    def procesar_cobro(self, monto_hitos: float):
+        raise NotImplementedError("Se debe implementar la interfaz local")
+
+# 3. El ADAPTER: Encapsula la API vieja/externa y expone la firma nueva
+class AdapterPagoInternacional(TARGET_ProcesadorPagoLocal):
+    def __init__(self, api_externa: GatewayPagoExternoUSD):
+        self._api_externa = api_externa
+
+    def procesar_cobro(self, monto_hitos: float):
+        # El Adapter asume la lógica de traducción interna de la petición
+        print(f"[ADAPTER] Convirtiendo petición local hacia formato internacional...")
+        # Simulación de mapeo o conversión de negocio (ej. conversión de moneda)
+        self._api_externa.pay_usd(monto_hitos)
+
+# 4. Código de Cliente (Arquitectura Local del IST Yavirac)
+if __name__ == "__main__":
+    print("--- SISTEMA DE COBROS INSTITUCIONAL ---")
+    
+    # El cliente no sabe que por detrás hay una API en USD incompatible
+    api_externa_usd = GatewayPagoExternoUSD()
+    procesador_con_adapter = AdapterPagoInternacional(api_externa_usd)
+    
+    # La llamada se hace con la firma local que espera nuestra arquitectura
+    procesador_con_adapter.procesar_cobro(150.00)
+</pre>
+            </div>
+
+            <div class="contenedor-ejercicios">
+                <h4>Sección Didáctica / Intención Técnica de la Semana</h4>
+                <details class="ejercicio-resuelto">
+                    <summary>Matriz Resumida de Intención Arquitectónica de la GoF <span class="tag-tipo tag-resuelto">Clasificado</span></summary>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Patrón de Diseño</th>
+                                <th>Tipo Oficial</th>
+                                <th>Propósito Arquitectónico Primario (MSc. Raúl Páez)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Abstract Factory</strong></td>
+                                <td>Creacional</td>
+                                <td>Garantizar consistencia matemática y técnica entre familias de objetos creados en caliente.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Builder</strong></td>
+                                <td>Creacional</td>
+                                <td>Evitar el antipatrón de constructores gigantescos e ilegibles con decenas de parámetros opcionales.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Facade</strong></td>
+                                <td>Estructural</td>
+                                <td>Reducir el acoplamiento directo y dañino de la UI con capas internas de negocio complejas.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Decorator</strong></td>
+                                <td>Estructural</td>
+                                <td>Favorecer Composición limpia sobre Herencia rígida para inyectar lógica funcional.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </details>
+            </div>
+        </section>
+        
         <footer>
             Manual Completo Unificado (Teoría + Prácticas Laboratoriales) | Examen Arquitectura de Software<br>
             &copy; 2026 IST Yavirac - Quito, Ecuador. Código HTML Puro y Semántico.
