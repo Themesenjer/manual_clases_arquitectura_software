@@ -438,6 +438,7 @@
             <li><a href="#semana4">Semana 4: Estilos Distribuidos</a></li>
             <li><a href="#semana5">Semana 5: Reactivos y Evolutivos</a></li>
             <li><a href="#semana6">Semana 6: Patrones Creacionales y Estructurales</a></li>
+            <li><a href="#semana7">Semana 7: Patrones de Comportamiento y Laboratorio</a></li>
         </ul>
     </nav>
 
@@ -1458,6 +1459,282 @@ if __name__ == "__main__":
                                 <td><strong>Decorator</strong></td>
                                 <td>Estructural</td>
                                 <td>Favorecer Composición limpia sobre Herencia rígida para inyectar lógica funcional.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </details>
+            </div>
+        </section>
+
+        <section id="semana7">
+            <h2>Semana 7: Patrones de Diseño II — Algoritmos y Asignación de Responsabilidades</h2>
+            
+            <h3>7.1 Conceptos Fundamentales de los Patrones de Comportamiento</h3>
+            <p>A diferencia de los creacionales (instanciación) y estructurales (composición), los <strong>Patrones de Comportamiento</strong> se concentran específicamente en los algoritmos, los flujos de ejecución y la distribución de responsabilidades críticas entre objetos interconectados.</p>
+            <ul>
+                <li><strong>Infructructura de Comunicación:</strong> No solo describen objetos o clases de forma aislada, sino el diseño de los canales abstractos y dinámicos a través de los cuales se comunican en tiempo de ejecución.</li>
+                <li><strong>Desacoplamiento Operacional:</strong> Su objetivo fundamental es liberar el flujo de ejecución de conexiones rígidas o cableadas (<em>hardcoded</em>).</li>
+                <li><strong>Foco de Abstracción:</strong> Encapsulan procesos y comportamientos variables del negocio detrás de abstracciones estables, permitiendo cambiar drásticamente cómo responde el sistema ante un evento sin modificar su código núcleo.</li>
+            </ul>
+
+            <h3>7.2 Catálogo de Patrones de Comportamiento con Ejemplos y Explicaciones</h3>
+            <p>A continuación se examinan y desarrollan los patrones clave de la GoF indicados para la arquitectura táctica moderna:</p>
+
+            <div class="patron-bloque">
+                <h4>A. Chain of Responsibility (Cadena de Responsabilidad)</h4>
+                <p><strong>Teoría:</strong> Permite pasar una petición de negocio a lo largo de una cadena secuencial de manejadores independientes. Cada manejador decide si procesa internamente la solicitud o si la delega al siguiente eslabón en la fila.</p>
+                
+                <div class="nota-codigo">
+<pre class="pre-bloque">
+# Ejemplo: Cadena de aprobación de presupuestos institucionales
+class ManejadorAprobacion:
+    def __init__(self, sucesor=None):
+        self._sucesor = sucesor
+
+    def procesar_solicitud(self, monto: float):
+        if self._sucesor:
+            self._sucesor.procesar_solicitud(monto)
+
+class Coordinador(ManejadorAprobacion):
+    def procesar_solicitud(self, monto: float):
+        if monto <= 500:
+            print(f"[COORDINADOR] Aprobado automáticamente monto menor a $500.")
+        else:
+            print(f"[COORDINADOR] Excede mi límite. Pasando al Decano...")
+            super().procesar_solicitud(monto)
+
+class Decano(ManejadorAprobacion):
+    def procesar_solicitud(self, monto: float):
+        if monto <= 5000:
+            print(f"[DECANO] Aprobado formalmente presupuesto de ${monto}.")
+        else:
+            print(f"[DECANO] Monto crítico. Pasando a Rectoría...")
+            super().procesar_solicitud(monto)
+
+class Rector(ManejadorAprobacion):
+    def procesar_solicitud(self, monto: float):
+        print(f"[RECTOR] Revisión exhaustiva y aprobación final para ${monto}.")
+
+# Uso
+cadena = Coordinador(Decano(Rector()))
+cadena.procesar_solicitud(3500)
+</pre>
+                </div>
+                <p class="explicacion-codigo"><strong>Explicación:</strong> El cliente realiza una sola llamada al <code>Coordinador</code> sin saber quién resolverá la petición en última instancia. Si el monto es alto ($3500), el objeto delega dinámicamente al <code>Decano</code> evitando condicionales de tipo <code>if/else</code> anidados y gigantescos en la capa de negocio.</p>
+            </div>
+
+            <div class="patron-bloque">
+                <h4>B. Command (Comando)</h4>
+                <p><strong>Teoría:</strong> Transforma una solicitud o acción operativa en un objeto de negocio independiente que contiene toda la información necesaria para ejecutarla. Esto permite parametrizar operaciones, encolarlas y soportar operaciones de deshacer (<em>undo</em>).</p>
+                
+                <div class="nota-codigo">
+<pre class="pre-bloque">
+# Ejemplo: Operaciones del sistema de base de datos transaccional
+class Comando:
+    def ejecutar(self): pass
+    def deshacer(self): pass
+
+class GuardarUsuarioComando(Comando):
+    def __init__(self, bd, usuario_id, datos):
+        self.bd = bd
+        self.usuario_id = usuario_id
+        self.datos = datos
+
+    def ejecutar(self):
+        self.bd.insertar(self.usuario_id, self.datos)
+
+    def deshacer(self):
+        self.bd.eliminar(self.usuario_id)
+
+class InvocadorHistorial:
+    def __init__(self):
+        self._historial = []
+
+    def ejecutar_comando(self, comando: Comando):
+        comando.ejecutar()
+        self._historial.append(comando)
+
+    def deshacer_ultimo(self):
+        if self._historial:
+            comando = self._historial.pop()
+            comando.deshacer()
+</pre>
+                </div>
+                <p class="explicacion-codigo"><strong>Explicación:</strong> Al encapsular la inserción como un objeto <code>Comando</code>, el sistema gana la capacidad de almacenar acciones en un array (historial), permitiendo volver atrás en el tiempo (Rollback) de forma limpia llamando a <code>deshacer()</code> sin acoplar la UI a la persistencia.</p>
+            </div>
+
+            <div class="patron-bloque">
+                <h4>C. Strategy (Estrategia)</h4>
+                <p><strong>Teoría:</strong> Define una familia de algoritmos intercambiables, encapsula cada uno de ellos en una clase independiente y logra que operen de forma transparente para el cliente, pudiendo cambiar de algoritmo en tiempo de ejecución de acuerdo a la necesidad de negocio.</p>
+                
+                <div class="nota-codigo">
+<pre class="pre-bloque">
+# Ejemplo: Pasarelas de cobro dinámicas en el IST Yavirac
+class EstrategiaPago:
+    def pagar(self, monto: float): pass
+
+class PagoTarjeta(EstrategiaPago):
+    def pagar(self, monto: float):
+        print(f"Cobrando ${monto} mediante Pasarela de Crédito (Visa/Mastercard).")
+
+class PagoTransferencia(EstrategiaPago):
+    def pagar(self, monto: float):
+        print(f"Validando comprobante bancario por ${monto} de forma asíncrona.")
+
+class ContextoPedido:
+    def __init__(self, estrategia: EstrategiaPago):
+        self._estrategia = estrategia
+
+    def cambiar_metodo(self, nueva_estrategia: EstrategiaPago):
+        self._estrategia = nueva_estrategia
+
+    def ejecutar_cobro(self, monto: float):
+        self._estrategia.pagar(monto)
+</pre>
+                </div>
+                <p class="explicacion-codigo"><strong>Explicación:</strong> El objeto <code>ContextoPedido</code> no sabe cómo se calcula o procesa el dinero internamente. Si el usuario decide pagar con transferencia en lugar de tarjeta, simplemente cambiamos la estrategia en caliente, cumpliendo estrictamente el Principio Open/Closed (OCP).</p>
+            </div>
+
+            <div class="patron-bloque">
+                <h4>D. Observer (Observador)</h4>
+                <p><strong>Teoría:</strong> Es la columna vertebral de las arquitecturas reactivas y los sistemas orientados a eventos (Event-Driven). Establece una relación de uno a muchos, de modo que cuando un objeto principal (Sujeto/Publisher) cambia su estado, notifica automáticamente a todos sus dependientes (Observadores/Subscribers).</p>
+                
+                <div class="nota-codigo">
+<pre class="pre-bloque">
+# Ejemplo: Emisor de Alertas Académicas del Instituto
+class SujetoNotificable:
+    def __init__(self):
+        self._observadores = []
+
+    def suscribir(self, observador):
+        self._observadores.append(observador)
+
+    def notificar_todos(self, mensaje: str):
+        for observador in self._observadores:
+            observador.actualizar(mensaje)
+
+class CanalWhatsApp:
+    def actualizar(self, mensaje: str):
+        print(f"[WhatsApp Alumno] Notificación entrante: {mensaje}")
+
+class CapaAuditoria:
+    def actualizar(self, mensaje: str):
+        print(f"[Logs Sistema] Guardando en disco evento auditado: {mensaje}")
+</pre>
+                </div>
+                <p class="explicacion-codigo"><strong>Explicación:</strong> El <code>SujetoNotificable</code> no conoce la implementación de WhatsApp ni de la capa de auditoría. Solo recorre su lista interna y despacha el evento, permitiendo agregar nuevos oyentes en el futuro de forma desacoplada.</p>
+            </div>
+
+            <div class="analogia">
+                <span>💡 Sinergia Táctica de la Semana:</span>
+                Mientras los estilos arquitectónicos globales (como Capas o Microservicios) organizan la infraestructura macro de la empresa, los **Patrones de Diseño de la GoF** operan a nivel táctico micro, ordenando las clases internas para que sean flexibles y cumplan los principios SOLID. Puedes usar un *Strategy* dentro de la capa de dominio de una Arquitectura Limpia para resolver reglas financieras cambiantes sin alterar el software base.
+            </div>
+
+            <h3>7.3 Laboratorio Práctico de la Semana: Sistema de Automatización de Tareas Académicas</h3>
+            <p><strong>Problema Planteado por el Ingeniero:</strong> Se requiere implementar un sistema automatizado que procese tareas entregadas por los alumnos. El flujo obligatorio exige: 1. Validar el formato del archivo subido (.pdf), 2. Registrar la hora exacta de entrega en auditoría, y 3. Si la tarea es válida, notificar inmediatamente por correo al docente. Si un paso falla, la cadena debe detenerse inmediatamente. Solución mediante **Chain of Responsibility** y **Observer**.</p>
+
+            <div class="nota-codigo">
+<pre class="pre-bloque">
+# ==========================================================================
+# CÓDIGO COMPLETO DEL LABORATORIO - COMPORTAMIENTO COMBINADO
+# ==========================================================================
+
+# Eslabón Base de la Cadena de Middleware Académico
+class EslabonProcesamiento:
+    def __init__(self, siguiente=None):
+        self._siguiente = siguiente
+
+    def procesar(self, tarea: dict) -> bool:
+        if self._siguiente:
+            return self._siguiente.procesar(tarea)
+        return True
+
+# Eslabón 1: Validación Estricta de Formatos
+class ValidadorArchivo(EslabonProcesamiento):
+    def procesar(self, tarea: dict) -> bool:
+        if not tarea['archivo'].endswith('.pdf'):
+            print(f" [ERROR CADENA] Archivo '{tarea['archivo']}' rechazado. Debe ser PDF.")
+            return False
+        print(" [OK CADENA] Formato de archivo verificado (.pdf).")
+        return super().procesar(tarea)
+
+# Eslabón 2: Registro de Tiempos y Auditoría
+class RegistroAuditoria(EslabonProcesamiento):
+    def procesar(self, tarea: dict) -> bool:
+        import datetime
+        tarea['fecha_procesado'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f" [OK CADENA] Timestamp asentado en logs de auditoría: {tarea['fecha_procesado']}")
+        return super().procesar(tarea)
+
+# Publicador Reactivo de Eventos Académicos (Observer)
+class NotificadorTareas:
+    def __init__(self):
+        self._suscriptores = []
+
+    def registrar_oyente(self, suscriptor):
+        self._suscriptores.append(suscriptor)
+
+    def disparar_evento(self, tarea: dict):
+        for s in self._suscriptores:
+            s.notificar(tarea)
+
+class ServicioNotificacionDocente:
+    def notificar(self, tarea: dict):
+        print(f"📬 [NOTIFICACIÓN DOCENTE] El estudiante entregó la tarea '{tarea['titulo']}' a tiempo.")
+
+# --- FLUJO PRINCIPAL EN TIEMPO DE EJECUCIÓN ---
+if __name__ == "__main__":
+    print("=== INICIANDO PIPELINE DE EVALUACIÓN ACADÉMICA ===")
+    
+    # 1. Configurar los Observadores
+    publicador = NotificadorTareas()
+    servicio_correo = ServicioNotificacionDocente()
+    publicador.registrar_oyente(servicio_correo)
+    
+    # 2. Configurar la Cadena de Responsabilidad (Middleware)
+    pipeline = ValidadorArchivo(RegistroAuditoria())
+    
+    # Caso de Prueba 1: Tarea Correcta
+    tarea_pablo = {"titulo": "Manual HTML Sem.7", "archivo": "manual_pablo.pdf"}
+    print("\nEvaluando Tarea de Pablo:")
+    if pipeline.procesar(tarea_pablo):
+        publicador.disparar_evento(tarea_pablo)
+        
+    # Caso de Prueba 2: Tarea Incorrecta (Debe abortar la cadena)
+    tarea_invalida = {"titulo": "Copia Examen", "archivo": "script.exe"}
+    print("\nEvaluando Tarea Inválida:")
+    if pipeline.procesar(tarea_invalida):
+        publicador.disparar_evento(tarea_invalida)
+</pre>
+            </div>
+
+            <div class="contenedor-ejercicios">
+                <h4>Guía de Selección de Patrones de Comportamiento</h4>
+                <details class="ejercicio-resuelto">
+                    <summary>Matriz de Intención de Diseño del Ingeniero <span class="tag-tipo tag-resuelto">Clasificado</span></summary>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Si tu problema de diseño es...</th>
+                                <th>El patrón GoF indicado es...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Necesitas auditar cambios en el estado interno y tener la opción estricta de volver atrás en el tiempo.</td>
+                                <td><strong>Memento</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Un flujo de negocio requiere pasar obligatoriamente por aprobaciones secuenciales de múltiples roles.</td>
+                                <td><strong>Chain of Responsibility</strong></td>
+                            </tr>
+                            <tr>
+                                <td>El comportamiento operativo de un objeto depende críticamente de sus atributos cambiantes en memoria.</td>
+                                <td><strong>State</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Deseas desacoplar el origen de una orden de los componentes reales encargados de procesarla.</td>
+                                <td><strong>Command</strong></td>
                             </tr>
                         </tbody>
                     </table>
