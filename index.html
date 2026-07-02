@@ -439,6 +439,7 @@
             <li><a href="#semana5">Semana 5: Reactivos y Evolutivos</a></li>
             <li><a href="#semana6">Semana 6: Patrones Creacionales y Estructurales</a></li>
             <li><a href="#semana7">Semana 7: Patrones de Comportamiento y Laboratorio</a></li>
+            <li><a href="#semana8">Semana 8: Diseño Estratégico, APIs y Laboratorio</a></li>
         </ul>
     </nav>
 
@@ -1739,6 +1740,132 @@ if __name__ == "__main__":
                         </tbody>
                     </table>
                 </details>
+            </div>
+        </section>
+
+        <section id="semana8">
+            <h2>Semana 8: Diseño Estratégico y APIs — Límites de Negocio y Calidad Técnica</h2>
+            
+            <h3>8.1 Introducción al Diseño Estratégico</h3>
+            <p>Antes de codificar o diseñar diagramas de bases de datos relacionales, los arquitectos de software deben comprender macroscópicamente cómo se divide, organiza y comunica el negocio real. El diseño estratégico no se enfoca en los detalles de clases internas, sino en definir las fronteras lógicas y asegurar que el software mapee fielmente el flujo operativo institucional.</p>
+
+            <h3>8.2 Las Tres Aristas Clave con Ejemplos Arquitectónicos</h3>
+            <p>A continuación se desarrollan los tres pilares fundamentales exigidos para modelar soluciones a gran escala:</p>
+
+            <div class="patron-bloque">
+                <h4>1. Domain-Driven Design (DDD) Estratégico</h4>
+                <p><strong>Teoría:</strong> Metodología de modelado que traduce las reglas del negocio al código mediante dos conceptos críticos:</p>
+                <ul>
+                    <li><strong>Lenguaje Ubicuo (Ubiquitous Language):</strong> Vocabulario común compartido estrictamente entre expertos de negocio y desarrolladores. Evita sinónimos ambiguos en las variables del código.</li>
+                    <li><strong>Contexto Delimitado (Bounded Context):</strong> La frontera lógica e inequívoca donde un modelo conceptual de software tiene validez absoluta.</li>
+                </ul>
+                <p><strong>Ejemplo en el Entorno Académico:</strong> La palabra "Matrícula" cambia radicalmente según la frontera de negocio:</p>
+                <ul>
+                    <li>En el <em>Contexto Financiero</em>, una Matrícula representa un valor económico por cobrar (Atributos: <code>monto</code>, <code>estado_pago</code>, <code>factura_id</code>).</li>
+                    <li>En el <em>Contexto Académico</em>, representa el registro de asignaturas tomadas (Atributos: <code>ciclo</code>, <code>paralelo</code>, <code>materias_inscritas</code>).</li>
+                </ul>
+                <p><strong>Solución de Software (Código Desacoplado):</strong></p>
+                <div class="nota-codigo">
+<pre class="pre-bloque">
+# Contexto Financiero (Maneja cobros)
+class MatriculaFinanciera:
+    def __init__(self, estudiante_id: str, costo_base: float):
+        self.estudiante_id = estudiante_id
+        self.monto_por_pagar = costo_base
+        self.pagado = False
+
+    def registrar_pago(self):
+        self.pagado = True
+
+# Contexto Académico (Maneja cupos y horarios)
+class MatriculaAcademica:
+    def __init__(self, estudiante_id: str, nivel: str):
+        self.estudiante_id = estudiante_id
+        self.nivel = nivel
+        self.materias = []
+
+    def asignar_materia(self, codigo_materia: str):
+        self.materias.append(codigo_materia)
+</pre>
+                </div>
+                <p class="explicacion-codigo"><strong>Explicación:</strong> Separar el concepto en dos clases dentro de módulos distintos evita crear un solo objeto gigante "Matrícula" lleno de <code>if/else</code>, permitiendo que el equipo financiero y el académico trabajen de forma independiente.</p>
+            </div>
+
+            <div class="patron-bloque">
+                <h4>2. Ley de Conway e Inverse Conway Maneuver</h4>
+                <p><strong>Teoría:</strong> <em>"Las organizaciones que diseñan sistemas están forzadas a producir diseños que son copias de las estructuras de comunicación de dichas organizaciones"</em>. Si los equipos de desarrollo están aislados, el software resultante tendrá APIs rotas y monolitos difíciles de acoplar.</p>
+                <p><strong>Ejemplo Real:</strong> Si el Instituto asigna un único equipo de desarrollo mixto para hacer la app móvil, el backend y la base de datos sin dividirse las tareas, construirán un "Monolito de Espagueti".</p>
+                <p><strong>Aplicación Práctica (Inverse Conway Maneuver):</strong> Consiste en diseñar primero la estructura del equipo humano que deseas promover (por ejemplo: Equipo de Cobros y Equipo de Notas por separado) para forzar evolutivamente a que el software se transforme de manera natural en microservicios limpios y distribuidos.</p>
+            </div>
+
+            <div class="patron-bloque">
+                <h4>3. Deuda Técnica (El Cuadrante de Martin Fowler)</h4>
+                <p><strong>Teoría:</strong> Es el costo financiero y operativo oculto de avanzar rápido lanzando código descuidado, de mala calidad o sin documentación, sacrificando la mantenibilidad futura por una ganancia inmediata de tiempo.</p>
+                <p><strong>Ejemplo mediante el Cuadrante de Fowler aplicado:</strong></p>
+                <ul>
+                    <li><strong>Prudente / Deliberada:</strong> <em>"Debemos salir a producción ya para cumplir la acreditación del instituto; conocemos las fallas técnicas del código y las pagaremos con refactorización el próximo sprint"</em>.</li>
+                    <li><strong>Imprudente / Deliberada (Peligrosa):</strong> <em>"No hay tiempo de diseñar APIs ni modularizar, tiren código rápido sin documentar y que luego vea el siguiente desarrollador cómo lo arregla"</em>.</li>
+                </ul>
+            </div>
+
+            <h3>8.3 Mitigación de Riesgos Mediante Contratos de API (API Contracts)</h3>
+            <div class="analogia">
+                <p>📝 <strong>Design-First:</strong> Consiste en diseñar formalmente el contrato de la API (usando herramientas como OpenAPI o Swagger) <em>antes</em> de escribir una sola línea de código en el backend. Esto permite que el equipo de Frontend y el de Backend avancen en paralelo utilizando datos simulados (Mocks).</p>
+                <p>🛡️ <strong>Aislamiento de Cambios:</strong> Al establecer contratos estables, se reduce drásticamente la deuda técnica inadvertida causada por actualizaciones que rompen la comunicación entre equipos de desarrollo independientes.</p>
+                <p>📌 <strong>Versionamiento Estratégico:</strong> Es obligatorio incluir esquemas de versión claros directamente en las URLs expuestas (ej: <code>/api/v1/estudiantes</code>) para otorgar predictibilidad total al ecosistema de integración corporativa.</p>
+            </div>
+
+            <h3>8.4 Laboratorio Práctico: Contrato y Simulación de API Académica (OpenAPI Mock)</h3>
+            <p><strong>Problema del Laboratorio:</strong> El equipo frontend del IST Yavirac necesita consumir las notas de los alumnos, pero el equipo backend sigue diseñando la base de datos. Para evitar retrasos y deuda técnica, se define un contrato estricto de API y se crea un script en Python que actúa como Servidor Mock (Simulador de Contrato).</p>
+
+            <div class="nota-codigo">
+<pre class="pre-bloque">
+# ==========================================================================
+# SIMULADOR DE CONTRATO DE API - SEMANA 8 (DESIGN-FIRST)
+# ==========================================================================
+import json
+
+# Simulación de la especificación OpenAPI en formato JSON para la URL: /api/v1/estudiantes
+CONTRATO_OPENAPI = """
+{
+    "endpoint": "/api/v1/estudiantes",
+    "version": "v1.0.0",
+    "metodo": "GET",
+    "respuesta_esperada": {
+        "status": "success",
+        "data": [
+            {"id": "YAV-001", "nombre": "Pablo Reyes", "promedio": 9.5},
+            {"id": "YAV-002", "nombre": "Ana Belen", "promedio": 8.8}
+        ]
+    }
+}
+"""
+
+class MockApiServer:
+    def __init__(self, contrato_json: str):
+        self.contrato = json.loads(contrato_json)
+
+    def atender_peticion(self, url: str, metodo: str):
+        # Validación estricta del contrato y de la versión de la URL
+        if url == self.contrato["endpoint"] and metodo == self.contrato["metodo"]:
+            print(f" [API CONTRACT] Petición válida para la versión: {self.contrato['version']}")
+            return 200, self.contrato["respuesta_esperada"]
+        else:
+            print(" [API CONTRACT ERROR] URL no encontrada o contrato de versión roto.")
+            return 404, {"error": "Endpoint Incompatible con el Contrato Establecido"}
+
+# --- EJECUCIÓN DEL MOCK EMULANDO FRONTEND ---
+if __name__ == "__main__":
+    print("=== PROBANDO ENTORNO PARALELO FRONTEND / BACKEND ===")
+    servidor_simulado = MockApiServer(CONTRATO_OPENAPI)
+    
+    # El Frontend consume la API v1 con total seguridad aunque el backend real no exista
+    codigo_estado, respuesta = servidor_simulado.atender_peticion("/api/v1/estudiantes", "GET")
+    
+    print(f"Código HTTP recibido: {codigo_estado}")
+    print("Datos mapeados en el Frontend:")
+    print(json.dumps(respuesta, indent=4, ensure_ascii=False))
+</pre>
             </div>
         </section>
 
