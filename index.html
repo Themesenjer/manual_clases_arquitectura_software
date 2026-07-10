@@ -511,6 +511,7 @@
             <li><a href="#semana6">Semana 6: Patrones Creacionales y Estructurales</a></li>
             <li><a href="#semana7">Semana 7: Patrones de Comportamiento y Laboratorio</a></li>
             <li><a href="#semana8">Semana 8: Diseño Estratégico, APIs y Laboratorio</a></li>
+            <li><a href="#semana9">Semana 9: Arquitectura Cloud-Native</a></li>
         </ul>
     </nav>
 
@@ -1941,6 +1942,308 @@ if __name__ == "__main__":
     print(json.dumps(respuesta, indent=4, ensure_ascii=False))
 </pre>
             </div>
+        </section>
+
+        <section id="semana9">
+            <h2>Semana 9: Arquitectura Cloud-Native y Orquestación</h2>
+            <p>Ser "Nativo de la Nube" (*Cloud-Native*) no implica únicamente tomar un sistema heredado antiguo (*Legacy*) y ejecutarlo dentro de una máquina virtual alquilada en un proveedor (eso se denomina *Cloud-Hosted*). El diseño Cloud-Native exige que las aplicaciones sean concebidas desde el primer día para explotar las ventajas operativas del modelo de computación en la nube: escalado automático, alta disponibilidad global y resiliencia automatizada ante fallos de infraestructura.</p>
+
+            <h3>9.1 Los Cuatro Pilares Cloud-Native y Ejemplos Prácticos</h3>
+            <p>De acuerdo con la CNCF (*Cloud Native Computing Foundation*), el ecosistema se sostiene sobre cuatro pilares operativos esenciales. A continuación se detallan e ilustran con tres ejemplos reales del mercado para cada uno:</p>
+
+            <h4>Pilar 1: Contenedores (Aislamiento Estándar)</h4>
+            <p>Empaquetan el código de la aplicación junto con sus dependencias, configuraciones y binarios exactos, garantizando un comportamiento idéntico desde el entorno local del desarrollador hasta los servidores de producción de alta escala.</p>
+            <ul>
+                <li><strong>Ejemplo 1 (Netflix):</strong> Utiliza contenedores ligeros para aislar el microservicio encargado de procesar la codificación de video en diferentes resoluciones, levantando miles de instancias homogéneas en minutos según la demanda de estrenos mundiales.</li>
+                <li><strong>Ejemplo 2 (Spotify):</strong> Empaqueta sus algoritmos de recomendación musical en imágenes Docker independientes, aislando las pesadas dependencias de librerías de Ciencia de Datos (como Python o TensorFlow) del resto de la interfaz de usuario.</li>
+                <li><strong>Ejemplo 3 (Plataformas de E-commerce):</strong> Contenedorizan el módulo transaccional del carrito de compras de manera que pueda ejecutarse de forma aislada en temporadas de alta concurrencia (como el Black Friday) sin depender de otros componentes informáticos operacionales.</li>
+            </ul>
+
+            <h4>Pilar 2: Microservicios (Componentes Autónomos)</h4>
+            <p>Sistemas divididos en componentes débilmente acoplados y altamente cohesivos enfocados en un único dominio de negocio (*Bounded Context*), minimizando drásticamente el "radio de explosión" ante errores catastróficos.</p>
+            <ul>
+                <li><strong>Ejemplo 1 (Uber):</strong> Divide su arquitectura en microservicios independientes para la gestión de conductores, el cálculo de rutas (Maps), y la pasarela de facturación. Si el microservicio de procesamiento de propinas experimenta degradación o latencia alta, los usuarios aún pueden solicitar viajes sin interrupciones.</li>
+                <li><strong>Ejemplo 2 (Amazon):</strong> El sistema de visualización de productos en la web está separado del microservicio que calcula los costos de envío. Esto permite que el catálogo siga renderizando información aun si el sistema de logística externo sufre un timeout prolongado.</li>
+                <li><strong>Ejemplo 3 (Banca Digital):</strong> Separa la consulta de saldos (alta lectura, baja escritura) del servicio de transferencias interbancarias, permitiendo escalar de forma independiente los recursos del servidor para el flujo más crítico y demandado.</li>
+            </ul>
+
+            <h4>Pilar 3: CI/CD Automatizado (Entrega Continua)</h4>
+            <p>Automatización absoluta desde la integración del código, ejecución de pruebas unitarias/estáticas, hasta el despliegue final, lo que faculta a las empresas a liberar valor hacia producción múltiples veces al día de forma segura.</p>
+            <ul>
+                <li><strong>Ejemplo 1 (Facebook/Meta):</strong> Implementa pipelines automatizados donde cada cambio de código introducido por un ingeniero pasa por miles de pruebas de regresión automáticas antes de ser inyectado gradualmente (*Canary Deployments*) a servidores globales.</li>
+                <li><strong>Ejemplo 2 (Airbnb):</strong> Configura flujos automatizados que compilan la aplicación web, ejecutan análisis de seguridad estática (SAST) y despliegan la nueva interfaz de reservas sin generar un solo segundo de tiempo de inactividad (*Zero-Downtime*).</li>
+                <li><strong>Ejemplo 3 (E-commerce Locales):</strong> Automatizan el paso a producción mediante webhooks de Git; en cuanto el líder técnico aprueba el cambio en la rama principal, el pipeline compila la imagen Docker y actualiza el servidor en la nube de forma transparente.</li>
+            </ul>
+
+            <h4>Pilar 4: DevOps y Herramientas Declarativas (Infraestructura como Código)</h4>
+            <p>Enfoque cultural y técnico que unifica el desarrollo y las operaciones. En lugar de configurar servidores manualmente mediante clics en una interfaz, el estado deseado de la infraestructura se define formalmente en archivos de configuración planos (YAML/JSON).</p>
+            <ul>
+                <li><strong>Ejemplo 1 (Uso de Terraform):</strong> Un arquitecto describe en un archivo de configuración declarativo que el sistema necesita 3 bases de datos replicadas y un balanceador de carga. Herramientas automáticas leen el archivo y construyen de forma idéntica la infraestructura en AWS, Azure o Google Cloud sin intervención manual.</li>
+                <li><strong>Ejemplo 2 (GitOps con ArgoCD):</strong> El estado de los servidores en producción se define estrictamente dentro de un repositorio de Git. Si un administrador modifica manualmente un servidor en la nube por error, la herramienta detecta el desvío y sobreescribe el servidor para devolverlo al estado oficial declarado en Git.</li>
+                <li><strong>Ejemplo 3 (Escalado por CPU en Kubernetes):</strong> Se declara mediante un archivo YAML que si el consumo de memoria del servicio de matrículas supera el 80%, el sistema debe aprovisionar automáticamente 2 nuevas instancias del contenedor para absorber la carga operativa de manera elástica.</li>
+            </ul>
+
+            <h3>9.2 El Patrón Circuit Breaker (Disyuntor) ante Fallos de Terceros</h3>
+            <p>En una arquitectura distribuida o Cloud-Native, el sistema depende inevitablemente de APIs de terceros (como pasarelas de pago externas, APIs de Inteligencia Artificial o sistemas de validación gubernamental). Si este servicio externo experimenta una caída total o una latencia extremadamente alta, las peticiones síncronas de nuestra aplicación empezarán a acumularse, bloqueando hilos de ejecución de los servidores locales y provocando una caída en cadena de todo nuestro ecosistema.</p>
+            <p>Para mitigar esto, el patrón **Circuit Breaker** actúa como un interruptor eléctrico de seguridad intermedio que monitorea los fallos y maneja tres estados operativos claros:</p>
+            
+            <div class="contenedor-ejemplo-circuit" style="background-color: var(--codigo-bg); padding: 15px; border-left: 4px solid var(--naranja-alerta); border-radius: 6px; margin-bottom: 20px;">
+                <p><strong>Ejemplo de Escenario Real: Fallo en Pasarela de Pagos Externa (API de Stripe/Payphone)</strong></p>
+                <ul>
+                    <li><strong>Estado CERRADO (Funcionamiento Normal):</strong> Las solicitudes de los estudiantes en la plataforma de matrículas del instituto fluyen normalmente hacia la API externa de pagos. El disyuntor cuenta los fallos. Si el 100% de los pagos se procesa con éxito, el circuito permanece cerrado y el tráfico pasa sin alteración.</li>
+                    <li><strong>Estado ABIERTO (Fallo Detectado):</strong> Repentinamente, los servidores de la pasarela de pagos colapsan a nivel mundial o su tiempo de respuesta sube a 30 segundos. Cuando el Circuit Breaker detecta que el 50% de las últimas 20 peticiones fallaron o dieron *timeout*, el circuito se <strong>ABRE</strong>. A partir de ese momento, cada vez que un estudiante intente pagar, el disyuntor bloquea inmediatamente la llamada a la red externa y devuelve una respuesta de respaldo instantánea (<em>Fallback</em>): <em>"Servicio de pagos temporalmente en mantenimiento, su matrícula ha sido pre-guardada"</em>. Esto evita que nuestro servidor se congele esperando al tercero.</li>
+                    <li><strong>Estado MITAD ABIERTO (Prueba de Recuperación):</strong> Pasados 5 minutos, el disyuntor entra en un estado de prueba. Permite que un número limitado de peticiones reales (por ejemplo, 3 transacciones) viajen hacia la API del tercero. Si estas solicitudes experimentan éxito, el circuito asume que el tercero se ha recuperado y vuelve al estado <strong>CERRADO</strong>. Si vuelven a fallar, el circuito regresa inmediatamente al estado <strong>ABIERTO</strong> para seguir protegiendo la integridad del sistema.</li>
+                </ul>
+            </div>
+
+            <h3>9.3 Contenedores vs. Máquinas Virtuales (VMs)</h3>
+            <p>Para comprender la infraestructura Cloud-Native es obligatorio diferenciar cómo se aíslan los recursos informáticos en un servidor físico. Mientras que las Máquinas Virtuales emulan hardware completo, los Contenedores aíslan procesos lógicos a nivel de sistema operativo.</p>
+
+            <div class="tabla-contenedor" style="overflow-x: auto; margin-bottom: 25px;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+                    <thead>
+                        <tr style="background-color: var(--azul-oscuro); color: white;">
+                            <th style="padding: 12px; border: 1px solid var(--borde); text-align: left;">Criterio Técnico</th>
+                            <th style="padding: 12px; border: 1px solid var(--borde); text-align: left;">Máquinas Virtuales (VMs)</th>
+                            <th style="padding: 12px; border: 1px solid var(--borde); text-align: left;">Contenedores (Docker / Podman)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--borde); font-weight: bold; color: var(--azul-tecnologico);">Arquitectura de Aislamiento</td>
+                            <td style="padding: 10px; border: 1px solid var(--borde);">Aislamiento a nivel de <strong>Hardware</strong>. Cada VM incluye un Sistema Operativo Invitado completo (Guest OS), kernels separados y drivers virtuales sobre un Hipervisor.</td>
+                            <td style="padding: 10px; border: 1px solid var(--borde);">Aislamiento a nivel de <strong>Sistema Operativo (Procesos)</strong>. Comparten el mismo kernel del Sistema Operativo Host. Utilizan características del kernel Linux como <em>namespaces</em> y <em>cgroups</em>.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--borde); font-weight: bold; color: var(--azul-tecnologico);">Consumo de Recursos y Peso</td>
+                            <td style="padding: 10px; border: 1px solid var(--borde);"><strong>Pesado:</strong> Gigabytes (GB) por cada instancia debido al tamaño del sistema operativo completo. Consumo de memoria RAM fijo y preasignado desde el arranque.</td>
+                            <td style="padding: 10px; border: 1px solid var(--borde);"><strong>Ligero:</strong> Megabytes (MB) por imagen. Solo contienen el código y las dependencias estrictas. Consumen RAM de forma dinámica según la carga real del proceso.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--borde); font-weight: bold; color: var(--azul-tecnologico);">Tiempo de Arranque</td>
+                            <td style="padding: 10px; border: 1px solid var(--borde);"><strong>Lento:</strong> Minutos. Requiere cargar completamente el kernel, inicializar servicios del sistema virtualizado y arrancar las capas operativas.</td>
+                            <td style="padding: 10px; border: 1px solid var(--borde);"><strong>Instantáneo:</strong> Milisegundos o pocos segundos. Al no tener que arrancar un kernel propio, el proceso del microservicio inicia de inmediato.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Cuadro Comparativo Extra: Ventajas y Desventajas de Contenedores vs VMs</h4>
+            <div class="tabla-contenedor" style="overflow-x: auto; margin-bottom: 25px;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+                    <thead>
+                        <tr style="background-color: var(--bg-tarjeta); color: white;">
+                            <th style="padding: 12px; border: 1px solid var(--borde); text-align: left;">Tecnología</th>
+                            <th style="padding: 12px; border: 1px solid var(--borde); text-align: left; color: var(--verde-exito);">Ventajas Clave</th>
+                            <th style="padding: 12px; border: 1px solid var(--borde); text-align: left; color: var(--naranja-alerta);">Desventajas y Desafíos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--borde); font-weight: bold;">Contenedores</td>
+                            <td style="padding: 10px; border: 1px solid var(--borde); color: #a3e635;">
+                                • Portabilidad absoluta ("funciona en mi máquina y en la nube").<br>
+                                • Mayor densidad (cientos de contenedores en un solo servidor físico).<br>
+                                • Integración nativa y ultra veloz con pipelines de CI/CD.
+                            </td>
+                            <td style="padding: 10px; border: 1px solid var(--borde); color: #fca5a5;">
+                                • Menor aislamiento de seguridad de forma nativa (comparten kernel).<br>
+                                • Gestión compleja del almacenamiento persistente (datos efímeros).<br>
+                                • Exige curvas de aprendizaje altas para su orquestación a gran escala.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--borde); font-weight: bold;">Máquinas Virtuales</td>
+                            <td style="padding: 10px; border: 1px solid var(--borde); color: #a3e635;">
+                                • Aislamiento de seguridad total y estricto a nivel de hardware.<br>
+                                • Capacidad de correr sistemas operativos de kernels completamente distintos en un mismo host.<br>
+                                • Ideal para albergar software monolítico robusto sin modificar.
+                            </td>
+                            <td style="padding: 10px; border: 1px solid var(--borde); color: #fca5a5;">
+                                • Desperdicio masivo de hardware (duplicación de sistemas operativos).<br>
+                                • Tiempos de aprovisionamiento lentos que limitan el auto-escalado ágil.<br>
+                                • Mantenimiento costoso (actualizaciones y parches para cada Guest OS).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Conclusión Objetiva Personal (Contenedores vs VMs)</h4>
+            <p style="border-left: 3px solid var(--azul-tecnologico); padding-left: 10px; font-style: italic;">
+                "La evolución arquitectónica demuestra que los contenedores no llegaron para aniquilar a las máquinas virtuales, sino para independizar al software del sistema operativo subyacente. En el desarrollo moderno, la combinación ideal consiste en aprovisionar máquinas virtuales elásticas en la nube pública y, dentro de ellas, inyectar clústeres densos de contenedores. Para el IST Yavirac y cualquier entorno de desarrollo ágil, el contenedor es la unidad de despliegue reina debido a su velocidad y portabilidad."
+            </p>
+
+            <h3>9.4 Kubernetes (K8s) y la Necesidad de Orquestación</h3>
+            <p>Desplegar y gestionar un solo contenedor mediante la consola es sencillo. Sin embargo, cuando una arquitectura de microservicios crece a decenas o cientos de contenedores distribuidos, surgen problemas complejos: ¿Qué pasa si un contenedor se cae a las 3:00 AM? ¿Cómo balanceamos el tráfico equitativamente entre ellos? ¿Cómo actualizamos el código sin apagar el sistema?</p>
+            <p>Aquí es donde entra **Kubernetes**, una plataforma de código abierto declarativa diseñada para automatizar el despliegue, el escalado horizontal y la gestión de aplicaciones contenedorizadas.</p>
+
+            <h4>Ventajas y Desventajas de Kubernetes</h4>
+            <div class="tabla-contenedor" style="overflow-x: auto; margin-bottom: 25px;">
+                <table style="width: 100%; border-collapse: collapse; min-width: 600px;">
+                    <thead>
+                        <tr style="background-color: var(--azul-oscuro); color: white;">
+                            <th style="padding: 12px; border: 1px solid var(--borde); text-align: left; color: var(--verde-exito);">Ventajas de implementar K8s</th>
+                            <th style="padding: 12px; border: 1px solid var(--borde); text-align: left; color: var(--naranja-alerta);">Desventajas y Retos de K8s</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid var(--borde);">
+                                <strong>• Auto-curación (Self-healing):</strong> Si un contenedor de la API falla, K8s lo destruye y levanta uno nuevo instantáneamente.<br>
+                                <strong>• Escalado Automático:</strong> Sube o baja el número de réplicas de los contenedores dinámicamente según el consumo de CPU.<br>
+                                <strong>• Despliegues Progresivos (Rolling Updates):</strong> Actualiza el código de la aplicación de manera gradual sin generar caídas de servicio.
+                            </td>
+                            <td style="padding: 10px; border: 1px solid var(--borde);">
+                                <strong>• Complejidad Extrema:</strong> Instalar, configurar y mantener un clúster propio de Kubernetes es sumamente difícil.<br>
+                                <strong>• Sobrecarga de Configuración:</strong> Requiere redactar y gestionar cientos de líneas de archivos YAML declarativos.<br>
+                                <strong>• Costo Inicial Elevado:</strong> Para proyectos pequeños o CRUDs básicos, la infraestructura de control de K8s consume demasiados recursos inútiles.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h4>Conclusión Objetiva a manera de Recomendación Personal (Kubernetes)</h4>
+            <p style="border-left: 3px solid var(--azul-tecnologico); padding-left: 10px; font-style: italic;">
+                "Recomiendo adoptar Kubernetes únicamente cuando el sistema haya alcanzado un nivel de madurez distribuida real, donde los microservicios sean completamente autónomos y la carga de tráfico justifique la complejidad de su gobernanza. Para proyectos académicos o emprendimientos en etapas tempranas, la mejor ruta es iniciar con herramientas de orquestación simplificadas como Docker Compose o servicios administrados de contenedores (ej. AWS App Runner o Cloud Run), evitando la sobre-ingeniería innecesaria."
+            </p>
+
+            <h3>9.5 La Metodología de los 12-Factor Apps</h3>
+            <p>Es un manifiesto de buenas prácticas diseñado para construir aplicaciones portables, limpias y resilientes en la nube. La diapositiva destaca tres factores metodológicos críticos para el desarrollo de software:</p>
+            <ul>
+                <li><strong>III. Configuraciones (Estricta Separación):</strong> Todo lo que varía entre entornos (credenciales de bases de datos, llaves de APIs, direcciones IP) jamás debe guardarse quemado en el código fuente. Debe almacenarse estrictamente en variables de entorno externas.</li>
+                <li><strong>VI. Procesos (Stateless / Sin Estado):</strong> La aplicación debe ejecutarse como uno o más procesos independientes que no guardan ningún tipo de dato local persistente en su disco duro temporal. Si el contenedor se destruye, los datos persistentes deben estar seguros en un servicio de base de datos externo.</li>
+                <li><strong>XI. Logs (Flujo Continuo):</strong> La aplicación no debe preocuparse por escribir ni gestionar archivos de registro `.log` internos. El código simplemente debe escupir los logs a la salida estándar del sistema (`stdout`), permitiendo que el orquestador externo los capture y analice.</li>
+            </ul>
+
+            <h3>9.6 Laboratorio Práctico: API de Matrículas Dockerizada</h3>
+            <p>Dando cumplimiento a los principios de <em>Configuraciones</em> y <em>Stateless</em> de las 12-Factor Apps, se presenta el desarrollo paso a paso de una API sumamente básica diseñada para demostrar la portabilidad de Docker y la inyección de variables externas.</p>
+
+            <div class="contenedor-pestañas-laboratorio" style="margin-top: 20px;">
+                
+                <div style="background-color: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 8px; padding: 15px; margin-bottom: 25px;">
+                    <span style="background-color: var(--azul-oscuro); color: white; padding: 4px 8px; font-size: 0.8rem; border-radius: 4px; font-weight: bold;">1. CÓDIGO FUENTE DE LA API (`main.py`)</span>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">API básica construida en Python con FastAPI que maneja las matrículas en memoria y expone variables de entorno.</p>
+                    <pre style="background-color: var(--codigo-bg); color: #a7f3d0; padding: 12px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 0.85rem;">
+from fastapi import FastAPI
+import os
+
+app = FastAPI(title="API Básica de Matrículas - Yavirac")
+
+# Factor III: Leer configuración desde variables de entorno externas
+DB_HOST = os.getenv("DB_HOST", "localhost-por-defecto")
+
+# Factor VI: Base de datos simulada en memoria (Stateless a nivel de disco local)
+BD_MATRICULAS = [
+    {"id": 1, "estudiante": "Pablo Reyes", "carrera": "Desarrollo de Software", "nivel": "5to Semestre"},
+    {"id": 2, "estudiante": "Ana Gómez", "carrera": "Diseño Gráfico", "nivel": "3er Semestre"}
+]
+
+@app.get("/matriculas")
+def obtener_matriculas():
+    # Factor XI: El log se envía a la salida estándar de forma continua
+    print("[LOG INFO] Listando todas las matrículas académicas")
+    return {"total": len(BD_MATRICULAS), "datos": BD_MATRICULAS, "servidor_db": DB_HOST}
+                    </pre>
+                    <div style="background-color: rgba(56, 189, 248, 0.1); border-left: 3px solid var(--azul-tecnologico); padding: 10px; margin-top: 10px; font-size: 0.88rem;">
+                        <strong>Análisis Técnico del Código:</strong> Este script inicializa una interfaz de servicios web ligera. Usamos la librería nativa <code>os</code> para cumplir con el <strong>Factor III</strong>, asegurando que la dirección del servidor de base de datos se inyecte dinámicamente desde afuera. Al almacenar los registros en la variable array <code>BD_MATRICULAS</code>, cumplimos el <strong>Factor VI (Stateless)</strong>, ya que el contenedor procesa las peticiones sin depender de la persistencia de un disco duro físico local e interviene la salida estándar (<code>print</code>) cumpliendo con el <strong>Factor XI</strong>.
+                    </div>
+                </div>
+
+                <div style="background-color: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 8px; padding: 15px; margin-bottom: 25px;">
+                    <span style="background-color: var(--purpura-examen); color: white; padding: 4px 8px; font-size: 0.8rem; border-radius: 4px; font-weight: bold;">2. ARCHIVO DE CONFIGURACIÓN (`Dockerfile`)</span>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Script de automatización optimizado basado en una imagen liviana para empaquetar la aplicación de manera eficiente.</p>
+                    <pre style="background-color: var(--codigo-bg); color: #f59e0b; padding: 12px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 0.85rem;">
+FROM python:3.11-slim
+WORKDIR /app
+RUN echo "fastapi\nuvicorn" > requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+COPY main.py .
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+                    </pre>
+                    <div style="background-color: rgba(168, 85, 247, 0.1); border-left: 3px solid var(--purpura-examen); padding: 10px; margin-top: 10px; font-size: 0.88rem;">
+                        <strong>Análisis Técnico del Dockerfile:</strong> La instrucción <code>FROM python:3.11-slim</code> descarga un sistema Linux ultra optimizado de solo megabytes en lugar de gigabytes. El comando <code>pip install --no-cache-dir</code> evita que se almacenen archivos basura de instalación del gestor de paquetes de Python dentro de la imagen final. Finalmente, se copia el archivo de código ejecutable <code>main.py</code> al final para optimizar el sistema de capas de Docker en caso de futuros cambios de código.
+                    </div>
+                </div>
+
+                <div style="background-color: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 8px; padding: 15px; margin-bottom: 25px;">
+                    <span style="background-color: #2e7d32; color: white; padding: 4px 8px; font-size: 0.8rem; border-radius: 4px; font-weight: bold;">3. COMANDOS DE EJECUCIÓN (Consola Git Bash)</span>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Instrucciones para compilar la imagen e inyectar la variable de entorno de forma externa en la terminal.</p>
+                    <pre style="background-color: var(--codigo-bg); color: #38bdf8; padding: 12px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 0.85rem;">
+# Compilar la imagen asignándole un tag descriptivo
+$ docker build -t api-matriculas-yavirac .
+
+# Correr el contenedor pasando de forma externa la variable de entorno (Factor III)
+$ docker run -d -p 8080:8000 -e DB_HOST="db-produccion-yavirac.local" api-matriculas-yavirac
+                    </pre>
+                    <div style="background-color: rgba(74, 222, 128, 0.1); border-left: 3px solid var(--verde-exito); padding: 10px; margin-top: 10px; font-size: 0.88rem;">
+                        <strong>Análisis Técnico de Comandos:</strong> El comando <code>build</code> toma el archivo de configuración plano y empaqueta la app. En el comando <code>run</code>, el flag <code>-p 8080:8000</code> mapea el puerto físico de la computadora del instituto hacia el puerto interno del contenedor, mientras que el flag <code>-e</code> inyecta dinámicamente la variable sin alterar el archivo de código original.
+                    </div>
+                </div>
+
+                <div style="background-color: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                    <span style="background-color: var(--oro-corona); color: black; padding: 4px 8px; font-size: 0.8rem; border-radius: 4px; font-weight: bold;">4. RESPUESTA VISUAL DE PRODUCCIÓN (Simulación de Salida)</span>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">A continuación se simula visualmente la interfaz interactiva y la estructura en formato JSON que devuelve la API de matrículas al ser consumida de forma exitosa:</p>
+                    
+                    <div style="background-color: #1e1b4b; border-radius: 6px; border: 1px solid #4338ca; padding: 10px; margin-top: 15px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; border-bottom: 1px solid #4338ca; padding-bottom: 8px;">
+                            <span style="background-color: #2563eb; color: white; padding: 2px 6px; font-size: 0.75rem; font-weight: bold; border-radius: 3px;">GET</span>
+                            <span style="font-family: monospace; font-size: 0.85rem; color: var(--texto-claro);">http://localhost:8080/matriculas</span>
+                            <span style="margin-left: auto; background-color: #16a34a; color: white; padding: 2px 6px; font-size: 0.75rem; border-radius: 3px; font-weight: bold;">Status: 200 OK</span>
+                        </div>
+                        
+                        <p style="font-size: 0.8rem; color: var(--texto-mutated); margin-bottom: 5px;"><strong>Cuerpo de la Respuesta (JSON de Salida):</strong></p>
+                        <pre style="background-color: var(--codigo-bg); color: #38bdf8; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 0.8rem; margin: 0; overflow-x: auto;">
+{
+  "total": 2,
+  "servidor_db": "db-produccion-yavirac.local",
+  "datos": [
+    {
+      "id": 1,
+      "estudiante": "Pablo Reyes",
+      "carrera": "Desarrollo de Software",
+      "nivel": "5to Semestre"
+    },
+    {
+      "id": 2,
+      "estudiante": "Ana Gómez",
+      "carrera": "Diseño Gráfico",
+      "nivel": "3er Semestre"
+    }
+  ]
+}
+                        </pre>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 5. ENLACE AL REPOSITORIO DE GITHUB -->
+                <div style="background-color: rgba(36, 41, 47, 0.4); border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-top: 25px; text-align: center;">
+                    <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true" style="fill: var(--texto-claro); margin-bottom: 10px;">
+                        <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82A7.433 7.433 0 0 0 8 3c-.68 0-1.37.09-2 .28-1.53-1.04-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+                    </svg>
+                    <h4 style="margin: 0 0 10px 0; color: var(--texto-claro);">¿Desea probar este laboratorio en tiempo real?</h4>
+                    <p style="font-size: 0.88rem; color: var(--texto-mutated); max-width: 500px; margin: 0 auto 15px auto;">
+                        El código fuente completo, el Dockerfile y las instrucciones de despliegue rápido se encuentran disponibles de acceso público en GitHub.
+                    </p>
+                    <a href="https://github.com/Themesenjer/laboratorio_semana9_arqSoft.git" target="_blank" style="display: inline-block; background-color: #24292f; color: #ffffff; padding: 10px 20px; font-size: 0.9rem; font-weight: bold; text-decoration: none; border-radius: 6px; border: 1px solid #57606a; transition: background-color 0.2s;">
+                        📦 Clonar Repositorio en GitHub
+                    </a>
+                </div>
+
+                <!-- 6. EVIDENCIA REAL DE FUNCIONAMIENTO -->
+                <div style="background-color: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 8px; padding: 20px; margin-top: 25px;">
+                    <span style="background-color: #0284c7; color: white; padding: 4px 8px; font-size: 0.8rem; border-radius: 4px; font-weight: bold;">6. CAPTURA DE PANTALLA EN ENTORNO LOCAL</span>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Como evidencia final del despliegue exitoso, aquí se muestra la interfaz interactiva original capturada desde el navegador web local ejecutándose sobre la infraestructura de contenedores:</p>
+                    
+                    <!-- Imagen adaptativa y limpia -->
+                    <div style="margin-top: 15px; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #ffffff; padding: 6px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <img src="mini_api.png" alt="Evidencia de Funcionamiento FastAPI Swagger UI" style="width: 100%; height: auto; display: block; border-radius: 4px;">
+                    </div>
+                </div>
         </section>
 
         <footer>
