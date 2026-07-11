@@ -521,7 +521,7 @@
         </div>
         <button id="theme-toggle" class="theme-btn" aria-label="Cambiar tema">☀️ Modo Claro</button>
         <header>
-            <h1>Manual de Arquitectura de Software</h1>
+            <h1>🖥️ Manual de Arquitectura de Software</h1>
             <p>Estructura de Aprendizaje Cronológica y Didáctica</p>
             <div class="meta-info">
                 <strong>Estudiante:</strong> Pablo Reyes | <strong>Quinto Semestre</strong><br>
@@ -529,8 +529,38 @@
             </div>
         </header>
 
+        <!-- INTRODUCCIÓN ACADÉMICA / RESUMEN EJECUTIVO -->
+        <section id="introduccion-manual" style="background-color: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 8px; padding: 25px; margin-bottom: 30px;">
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // OVERVIEW_SYSTEM_INITIALIZATION
+            </div>
+            <h2 style="color: var(--azul-tecnologico); margin-top: 0; display: flex; align-items: center; gap: 10px;">
+                📋 Resumen Ejecutivo del Componente Teórico-Práctico
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="intro_banner.png" alt="Arquitectura de Sistemas" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
+            <p>El presente manual técnico compila, estructura y analiza los fundamentos críticos abordados a lo largo del periodo académico en la cátedra de Arquitectura de Sistemas. El objetivo de este documento es consolidar una base de conocimientos evolutiva que transiciona desde los paradigmas tradicionales de diseño de hardware y redes, hasta las metodologías de despliegue automatizado e infraestructura moderna en la nube (<em>Cloud-Native</em>).</p>
+            
+            <p>A través de un recorrido sistemático de 9 semanas, el estudiante y el evaluador encontrarán:</p>
+            <ul style="grid-template-columns: 1fr; gap: 10px; padding-left: 20px;">
+                <li><strong>Fundamentos de Infraestructura:</strong> Desglose analítico de direccionamiento IP (IPv4), subnetworking, y topologías de red que sostienen los sistemas distribuidos.</li>
+                <li><strong>Gobernanza de APIs y Protocolos:</strong> Evaluación comparativa y especificaciones de diseño bajo los estándares REST y la madurez arquitectónica.</li>
+                <li><strong>Patrones de Resiliencia y Diseño Moderno:</strong> Aplicación práctica de mecanismos de tolerancia a fallos como el patrón <em>Circuit Breaker</em> y el manifiesto de las <em>12-Factor Apps</em>.</li>
+                <li><strong>Validación Laboratorial:</strong> Casos prácticos de empaquetamiento y aislamiento de microservicios mediante la tecnología de contenedores Docker, automatización de entornos y despliegue integrado con repositorios de control de versiones.</li>
+            </ul>
+        </section>
+
         <section id="semana1">
-            <h2>Semana 1: Atributos de Calidad y El Arte del "Trade-off"</h2>
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // WHAT_IS_SOFTWARE_ARCHITECTURE?
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                🏛️ Semana 1: Arquitectura Del Software
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana1_redes.png" alt="Redes" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             
             <h3>1.1 ¿Qué es la Arquitectura de Software?</h3>
             <p>La arquitectura representa el conjunto de <strong>decisiones estratégicas fundamentales</strong> que dan forma a un sistema informático y que son costosas o difíciles de revertir una vez implementadas. No se enfoca en aspectos estéticos o de interfaz superficiales, sino en las propiedades operativas globales y en cómo se comportará la infraestructura bajo entornos críticos de estrés.</p>
@@ -580,7 +610,15 @@
         </section>
 
         <section id="semana2">
-            <h2>Semana 2: Documentación y Diseño Arquitectónico (ADRs)</h2>
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // ARCHITECTURAL_DOCUMENTATION_AND_ADRS
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                📘 Semana 2: Documentación y Diseño Arquoitectonico
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana2_apis.png" alt="APIs" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             
             <h3>2.1 La Documentación como Herramienta de Comunicación</h3>
             <p>La documentación en los proyectos de software avanzados no constituye un artefacto burocrático inerte o una pérdida de tiempo. Es, en sentido estricto, <strong>infraestructura de conocimiento compartido</strong>. Su misión primaria es evitar el colapso del sistema por la pérdida de contexto técnico y la rotación natural del personal en los equipos de ingeniería.</p>
@@ -656,7 +694,15 @@
         </section>
 
         <section id="semana3">
-            <h2>Semana 3: Estilos Arquitectónicos I — Estructurales y Clásicos</h2>
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // STRUCTURAL_AND_CLASSICAL_STYLES
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                🏗️ Semana 3: Estilos Arquitectonicos I
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana3_seguridad.png" alt="Seguridad" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             
             <h3>3.1 La Fundación Estructural</h3>
             <p>Los estilos arquitectónicos estructurales proveen patrones predecibles de organización interna para los sistemas de software. Su meta principal es mitigar la entropía y la complejidad del código delimitando de forma estricta las fronteras operativas y los niveles de abstracción lógicos.</p>
@@ -809,7 +855,15 @@ evaluador.IniciarCicloProcesamiento();
         </section>
 
         <section id="semana4">
-            <h2>Semana 4: Estilos II — Distribuidos y Observabilidad</h2>
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // DISTRIBUTIVE_STYLES
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                🌐 Semana 4: Estilos Arquitectonicos II
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana4_cloud.png" alt="Cloud" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             
             <h3>4.1 El Cambio de Paradigma</h3>
             <p>Iniciamos la transición drástica desde arquitecturas monolíticas de proceso único tradicionales (donde todos los módulos del sistema conviven compartiendo memoria física en un único servidor) hacia **ecosistemas fragmentados distribuidos** que se ven obligados a interactuar cruzando la topología de la red mediante protocolos de transporte.</p>
@@ -922,7 +976,15 @@ evaluador.IniciarCicloProcesamiento();
         </section>
 
         <section id="semana5">
-            <h2>Semana 5: Estilos III — Arquitecturas Reactivas, Evolutivas y Adaptabilidad</h2>
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // REACTIVE_AND_EVOLUTIONARY_CORS EVENTS_AND_ADAPTABILITY
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                🧱 Semana 5: Estilos Arquitectnonicos III
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana5_patrones.png" alt="Patrones" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             
             <h3>5.1 Arquitectura Orientada a Eventos (EDA)</h3>
             <p>Representa la evolución hacia sistemas reactivos asíncronos en tiempo real. En lugar de forzar llamadas acopladas HTTP directas entre servicios, los componentes emiten notificaciones inmutables denominadas **Eventos de Dominio** que indican que algo relevante ha sucedido en el negocio.</p>
@@ -1381,7 +1443,15 @@ evaluador.IniciarCicloProcesamiento();
         </section>
 
         <section id="semana6">
-            <h2>Semana 6: Patrones de Diseño I — Catálogo Creacional y Estructural</h2>
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // CREATIONAL_AND_STRUCTURAL
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                🧩 Semana 6: Patrones de Diseño I
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana6_db.png" alt="Bases de Datos" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             
             <h3>6.1 Conceptos Fundamentales de la Programación Orientada a Objetos (POO)</h3>
             <p>Antes de sumergirse en el catálogo de soluciones de la Gang of Four (GoF), es imperativo dominar los fundamentos que sostienen el diseño robusto de software:</p>
@@ -1543,7 +1613,15 @@ if __name__ == "__main__":
         </section>
 
         <section id="semana7">
-            <h2>Semana 7: Patrones de Diseño II — Algoritmos y Asignación de Responsabilidades</h2>
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // BEHAVIORAL_PATTERNS
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                ⚙️ Semana 7: Patrones de Diseño II
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana7_testing.png" alt="Testing" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             
             <h3>7.1 Conceptos Fundamentales de los Patrones de Comportamiento</h3>
             <p>A diferencia de los creacionales (instanciación) y estructurales (composición), los <strong>Patrones de Comportamiento</strong> se concentran específicamente en los algoritmos, los flujos de ejecución y la distribución de responsabilidades críticas entre objetos interconectados.</p>
@@ -1819,7 +1897,15 @@ if __name__ == "__main__":
         </section>
 
         <section id="semana8">
-            <h2>Semana 8: Diseño Estratégico y APIs — Límites de Negocio y Calidad Técnica</h2>
+            <div style="display: inline-block; background-color: rgba(56, 189, 248, 0.1); border: 1px solid var(--azul-tecnologico); color: var(--azul-tecnologico); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // BUISSNESS_BOUNDARIES_TEAMS_STRUCTURES_AND_ TECHNICAL_QUALITY
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                🔗 Semana 8: Diseño Estratégico y APIs
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana8_microservicios.png" alt="Microservicios" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             
             <h3>8.1 Introducción al Diseño Estratégico</h3>
             <p>Antes de codificar o diseñar diagramas de bases de datos relacionales, los arquitectos de software deben comprender macroscópicamente cómo se divide, organiza y comunica el negocio real. El diseño estratégico no se enfoca en los detalles de clases internas, sino en definir las fronteras lógicas y asegurar que el software mapee fielmente el flujo operativo institucional.</p>
@@ -1945,7 +2031,15 @@ if __name__ == "__main__":
         </section>
 
         <section id="semana9">
-            <h2>Semana 9: Arquitectura Cloud-Native y Orquestación</h2>
+            <div style="display: inline-block; background-color: rgba(168, 85, 247, 0.1); border: 1px solid #c084fc; color: #c084fc; font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // ELASTICITY_RESILIENCE_AND_HIGH_GLOBAL_AVAILABILITY
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                ☁️ Semana 9: Arquitectura Cloud-Nativen
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="semana9_cloud_native.png" alt="Laboratorio Docker" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
             <p>Ser "Nativo de la Nube" (*Cloud-Native*) no implica únicamente tomar un sistema heredado antiguo (*Legacy*) y ejecutarlo dentro de una máquina virtual alquilada en un proveedor (eso se denomina *Cloud-Hosted*). El diseño Cloud-Native exige que las aplicaciones sean concebidas desde el primer día para explotar las ventajas operativas del modelo de computación en la nube: escalado automático, alta disponibilidad global y resiliencia automatizada ante fallos de infraestructura.</p>
 
             <h3>9.1 Los Cuatro Pilares Cloud-Native y Ejemplos Prácticos</h3>
@@ -2244,6 +2338,46 @@ $ docker run -d -p 8080:8000 -e DB_HOST="db-produccion-yavirac.local" api-matric
                         <img src="mini_api.png" alt="Evidencia de Funcionamiento FastAPI Swagger UI" style="width: 100%; height: auto; display: block; border-radius: 4px;">
                     </div>
                 </div>
+        </section>
+
+        <!-- CONCLUSIÓN GENERAL Y RETROSPECTIVA UNIVERSITARIA -->
+        <section id="retrospectiva-final" style="margin-top: 40px; padding-top: 20px; border-top: 2px dashed var(--borde);">
+            <div style="display: inline-block; background-color: rgba(34, 197, 94, 0.1); border: 1px solid var(--verde-exito); color: var(--verde-exito); font-family: monospace; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">
+                // SYSTEM_SHUTDOWN_LOG_SUCCESS
+            </div>
+            <h2 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+                🏁 Conclusiones Generales y Retrospectiva Académica
+            </h2>
+            <div style="margin: 15px 0 20px 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--borde); background-color: #000;">
+                <img src="conclusion_banner.png" alt="Conclusión" style="width: 100%; height: auto; max-height: 220px; object-fit: cover; display: block; opacity: 0.85;">
+            </div>
+            
+            <p>La arquitectura de software y de infraestructura ha dejado de ser un componente estático para convertirse en un ecosistema vivo, dinámico y elástico. Al finalizar este ciclo de aprendizaje, se evidencia que el desarrollo de software moderno no se limita a la escritura de código limpio, sino que exige una comprensión profunda del entorno donde ese código va a coexistir, escalar y fallar.</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                
+                <!-- Tarjeta 1: Aprendizaje Técnico -->
+                <div style="background-color: var(--bg-tarjeta); border-left: 4px solid var(--azul-tecnologico); padding: 15px; border-radius: 4px;">
+                    <h4 style="margin: 0 0 10px 0; color: var(--texto-claro);">1. Síntesis Evolutiva del Aprendizaje</h4>
+                    <p style="font-size: 0.9rem; margin: 0; text-align: justify;">
+                        Comprender la transición desde la configuración manual de subredes e infraestructura física hasta la abstracción declarativa con Docker y Kubernetes permite desarrollar un criterio técnico robusto. La adopción de metodologías estandarizadas (como las 12-Factor Apps) mitiga los problemas históricos de compatibilidad y prepara las soluciones de software para integrarse nativamente en flujos de CI/CD globales.
+                    </p>
+                </div>
+
+                <!-- Tarjeta 2: Criterio de Resiliencia -->
+                <div style="background-color: var(--bg-tarjeta); border-left: 4px solid var(--naranja-alerta); padding: 15px; border-radius: 4px;">
+                    <h4 style="margin: 0 0 10px 0; color: var(--texto-claro);">2. Filosofía de Diseño ante Fallos</h4>
+                    <p style="font-size: 0.9rem; margin: 0; text-align: justify;">
+                        El análisis de patrones de diseño como el <em>Circuit Breaker</em> transforma la perspectiva del desarrollador: los errores en sistemas distribuidos no se ignoran, se anticipan. Diseñar software asumiendo que los servicios de terceros van a fallar es la línea divisoria entre una aplicación frágil de entorno local y una arquitectura empresarial resiliente de alta disponibilidad.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Pensamiento de Cierre Personal/Institucional -->
+            <div style="background-color: rgba(56, 189, 248, 0.05); border: 1px solid var(--borde); border-radius: 6px; padding: 20px; margin-top: 25px; font-style: italic; text-align: center;">
+                "La ingeniería de sistemas no busca la complejidad, busca dominarla. Las herramientas revisadas a lo largo de este periodo académico en el IST Yavirac sientan las bases técnico-prácticas esenciales para afrontar los desafíos reales de la industria tecnológica actual, garantizando soluciones de software eficientes, portables y escalables."
+            </div>
         </section>
 
         <footer>
